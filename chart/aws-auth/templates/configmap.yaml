@@ -1,0 +1,29 @@
+# ASK mostafa about the kubernetes permissions per each IAM rule
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+  annotations:
+    meta.helm.sh/release-name: {{ .Release.Name }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: "Helm"
+data:
+  # mapAccounts: |
+  #   - "{{ .Values.accountId }}"
+  mapRoles: |
+    {{- range .Values.nodegroup_role_arn }}
+    - "groups":
+      - "system:bootstrappers"
+      - "system:nodes"
+      "rolearn": "{{ . }}"
+      "username": "system:node:{{`{{`}}EC2PrivateDNSName{{`}}`}}"
+    {{- end }}
+    {{- range .Values.iam_admin_roles }}
+    - "groups":
+      - "owners:admin"
+      "rolearn": "arn:aws:iam::{{ $.Values.accountId }}:role/{{ . }}"
+      "username": {{ . | quote }}
+    {{- end }}

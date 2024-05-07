@@ -1,0 +1,5 @@
+apiVersion: v2
+appVersion: 0.0.0
+name: aws-auth
+type: application
+version: 1.0.0
