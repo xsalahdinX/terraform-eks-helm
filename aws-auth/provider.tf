@@ -6,8 +6,7 @@ provider "kubernetes" {
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "kubectl"
-    # This requires the awscli to be installed locally where Terraform is executed
-    args = ["delete", "cm", "aws-auth", "kube-system"]
+    args = ["delete", "cm", "aws-auth", "-n", "kube-system"]
   }
 }
 
