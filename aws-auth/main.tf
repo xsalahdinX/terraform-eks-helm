@@ -12,6 +12,7 @@ resource "kubernetes_labels" "aws_auth_labels" {
 resource "kubernetes_annotations" "aws_auth_annotations" {
   api_version = "v1"
   kind        = "ConfigMap"
+  depends_on = [ kubernetes_labels.aws_auth_labels ]
   metadata {
     name = "aws-auth"
     namespace = "kube-system"
@@ -25,6 +26,7 @@ resource "kubernetes_annotations" "aws_auth_annotations" {
 resource "helm_release" "aws_auth" {
   name       = "aws-auth"
   chart      = "./charts/aws-auth"
+  depends_on = [ kubernetes_annotations.aws_auth_annotations ]
   
   
   set {
