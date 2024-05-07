@@ -6,7 +6,7 @@ resource "kubernetes_labels" "aws_auth_labels" {
     namespace = "kube-system"
   }
   labels = {
-    "app.kubernetes.io/managed-by": "Helm"
+    "app.kubernetes.io/managed-by" = "Helm"
   }
 }
 resource "kubernetes_annotations" "aws_auth_annotations" {
@@ -17,8 +17,8 @@ resource "kubernetes_annotations" "aws_auth_annotations" {
     namespace = "kube-system"
   }
   annotations = {
-    "meta.helm.sh/release-name": "aws-auth"
-    "meta.helm.sh/release-namespace": "default"
+    "meta.helm.sh/release-name" = "aws-auth"
+    "meta.helm.sh/release-namespace" = "default"
   }
 }
 
