@@ -22,7 +22,7 @@ resource "kubernetes_annotations" "aws_auth_annotations" {
     name = "aws-auth"
     namespace = "kube-system"
   }
-  template_annotations = {
+  annotations = {
     "meta.helm.sh/release-name" = "aws-auth"
     "meta.helm.sh/release-namespace" = "default"
   }
