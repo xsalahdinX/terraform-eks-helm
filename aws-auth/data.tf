@@ -10,9 +10,9 @@ locals {
 
 
 data "aws_eks_cluster_auth" "eks" {
-  name = "eks-cluster"
+  name = "eks_cluster"
 }
 
 data "aws_eks_cluster" "eks_info" {
-  name = "eks-cluster"
+  name = "eks_cluster"
 }
