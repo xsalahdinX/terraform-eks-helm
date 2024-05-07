@@ -1,6 +1,7 @@
 resource "kubernetes_labels" "aws_auth_labels" {
   api_version = "v1"
   kind        = "ConfigMap"
+  force = true
   metadata {
     name = "aws-auth"
     namespace = "kube-system"
@@ -12,6 +13,8 @@ resource "kubernetes_labels" "aws_auth_labels" {
 resource "kubernetes_annotations" "aws_auth_annotations" {
   api_version = "v1"
   kind        = "ConfigMap"
+  force = true
+
   depends_on = [ kubernetes_labels.aws_auth_labels ]
   metadata {
     name = "aws-auth"
