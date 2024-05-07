@@ -1,5 +1,5 @@
-nodegroup_role_arn: [arn:aws:iam::211125357951:role/eks_access_role]
+# nodegroup_role_arn: [arn:aws:iam::211125357951:role/eks_access_role]
 iam_admin_roles: [eks_access_role]
-accountId: "211125357951"
+# accountId: "211125357951"
 
 
