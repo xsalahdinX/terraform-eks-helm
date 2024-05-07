@@ -1,5 +1,5 @@
 module "aws_auth" {
-  source = "./aws-auth"
+  source       = "./aws-auth"
   cluster_name = "eks_cluster"
 }
 
