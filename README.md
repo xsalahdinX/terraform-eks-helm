@@ -1,26 +1,21 @@
-# terraform-eks-helm
-
 # AWS EKS Cluster Authentication Configuration
 
+This Terraform configuration manages the authentication for an AWS EKS cluster.
 
 
-# Aws-Auth Method
+
+# AWS-AUTH Method
 
 The aws-auth ConfigMap is used to create a static mapping between IAM principals, i.e. IAM Users and Roles, and Kubernetes RBAC groups. RBAC groups can be referenced in Kubernetes RoleBindings or ClusterRoleBindings.
-
-This Terraform configuration manages the authentication for an AWS EKS cluster, including retrieving the AWS account ID, setting up Kubernetes labels and annotations, and deploying Helm charts.
-
-
-
-
 
 
 
 ## Prerequisites
 
-- [Terraform](https://www.terraform.io/downloads.html) installed on your local machine.
-- AWS CLI configured with necessary permissions.
-- Helm installed on your local machine.
+- already up and ruuning EKS cluster see pervious Repo [EKS](https://github.com/xsalahdinX/terraform-eks-cluster)
+- iam user and a role with permission trust that user  
+- aws-auth helm chart  with role and rolebinding or cluster and clusterrolebinding
+  
 
 ## Setup
 
