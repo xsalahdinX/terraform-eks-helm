@@ -14,11 +14,11 @@ data:
   # mapAccounts: |
   #   - "{{ .Values.accountId }}"
   mapRoles: |
-    {{- range .Values.nodegroup_role_arn }}
+    {{- range .Values.nodegroup_role }}
     - "groups":
       - "system:bootstrappers"
       - "system:nodes"
-      "rolearn": "{{ . }}"
+      "rolearn": "arn:aws:iam::{{ $.Values.accountId }}:role/{{ . }}"
       "username": "system:node:{{`{{`}}EC2PrivateDNSName{{`}}`}}"
     {{- end }}
     {{- range .Values.iam_admin_roles }}
