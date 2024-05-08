@@ -13,17 +13,18 @@ The aws-auth ConfigMap is used to create a static mapping between IAM principals
 ## Prerequisites
 
 - already up and ruuning EKS cluster see pervious Repo [EKS](https://github.com/xsalahdinX/terraform-eks-cluster)
-- iam user and a role with permission trust that user  
+- iam user and a role with permission trust that user [roles](https://github.com/xsalahdinX/terraform-eks-cluster/blob/main/user_roles/roles.tf)
 - aws-auth helm chart  with role and rolebinding or cluster and clusterrolebinding
   
 
 ## Setup
 
-1. Amazon EKS automatically creates the aws-auth ConfigMap in the kube-system namespace using either the API_AND_CONFIG_MAP or CONFIG_MAP options. This ConfigMap manages access to the EKS cluster.
-2. if we want to customize the access to eks cluster with our iam roles we have to deploy a new auth
-3. we use helm solution to control the deployment of auth configmap
-4. when trying to deploy the auth helm chart it will error as the helm annotations and labels does not exit in the orginal configmap
-5. so kubernets label and annotations blocks has been created to add the helm labels to the aws-auth to allow helm to replace it when deployments   
+1. Amazon EKS automatically creates the aws-auth ConfigMap in the kube-system namespace using either the API_AND_CONFIG_MAP or CONFIG_MAP options. This ConfigMap 
+   manages access to the EKS cluster.
+2. If you need to customize access to the EKS cluster with IAM roles, you'll have to deploy a new authentication setup.
+3. To manage the deployment of the authentication ConfigMap more effectively, we use Helm.
+4. However, deploying the authentication Helm chart may fail because the required Helm annotations and labels are missing from the original ConfigMap.
+5. To resolve this, we add Kubernetes labels and annotations to the aws-auth ConfigMap. This allows Helm to replace the ConfigMap correctly during deployments.
 
 
 Configuration
