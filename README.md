@@ -1,3 +1,6 @@
+
+
+
 # AWS EKS Cluster Authentication Configuration
 
 This Terraform configuration manages the authentication for an AWS EKS cluster.
@@ -44,3 +47,19 @@ eks_cluster_certificate_authority_data: The Base64-encoded certificate authority
 
 
 Feel free to adjust the content and structure of the README to better fit your project and its documentation needs. Let me know if you need further assistance!
+
+
+```
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: gamil-binding
+  namespace: gamil
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: gamil
+subjects:
+- kind: Group
+  name: owners:gamil # This is the link between k8s and the IAM role I mapped in the mapRoles bit
+```
