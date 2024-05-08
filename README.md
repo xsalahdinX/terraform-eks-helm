@@ -19,14 +19,11 @@ The aws-auth ConfigMap is used to create a static mapping between IAM principals
 
 ## Setup
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/xsalahdinX/terraform-eks-helm.git
-   cd terraform-eks-helm/aws-auth
-2.Initialize the Terraform configuration:
-3.Review the configuration in main.tf to ensure it matches your requirements.
-4.Apply the Terraform configuration:
+1. Amazon EKS automatically creates the aws-auth ConfigMap in the kube-system namespace using either the API_AND_CONFIG_MAP or CONFIG_MAP options. This ConfigMap manages access to the EKS cluster.
+2. if we want to customize the access to eks cluster with our iam roles we have to deploy a new auth
+3. we use helm solution to control the deployment of auth configmap
+4. when trying to deploy the auth helm chart it will error as the helm annotations and labels does not exit in the orginal configmap
+5. so kubernets label and annotations blocks has been created to add the helm labels to the aws-auth to allow helm to replace it when deployments   
 
 
 Configuration
