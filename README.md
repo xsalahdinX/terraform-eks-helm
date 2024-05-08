@@ -4,7 +4,7 @@ This Terraform configuration manages the authentication for an AWS EKS cluster.
 
 
 
-# AWS-AUTH Method
+## AWS-AUTH Method
 
 The aws-auth ConfigMap is used to create a static mapping between IAM principals, i.e. IAM Users and Roles, and Kubernetes RBAC groups. RBAC groups can be referenced in Kubernetes RoleBindings or ClusterRoleBindings.
 
