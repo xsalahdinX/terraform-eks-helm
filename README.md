@@ -49,6 +49,20 @@ eks_cluster_certificate_authority_data: The Base64-encoded certificate authority
 Feel free to adjust the content and structure of the README to better fit your project and its documentation needs. Let me know if you need further assistance!
 
 
+
+
+```
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: gamil
+  namespace: gamil
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+```
+
 ```
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
