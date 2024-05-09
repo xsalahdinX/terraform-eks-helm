@@ -1,5 +1,6 @@
 resource "helm_release" "aws-load-balancer-controller" {
   name       = "aws-load-balancer-controller"
+  namespace  = "kub-system"
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
   version    = "1.7.1"
