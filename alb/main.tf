@@ -3,7 +3,7 @@ resource "helm_release" "aws-load-balancer-controller" {
   repository = "https://aws.github.io/eks-charts"
   chart      = "eks/aws-load-balancer-controller"
   version    = "1.7.2"
-  values = file("values.yaml")
+  values = file("./alb/values.yaml")
   
 
   # set {
