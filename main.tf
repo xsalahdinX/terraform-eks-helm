@@ -7,3 +7,7 @@ module "aws_auth" {
 }
 
 
+module "alb" {
+  source       = "./alb"
+  cluster_name = "eks"
+}
