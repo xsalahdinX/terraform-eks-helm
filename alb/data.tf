@@ -18,4 +18,6 @@ locals {
   # eks_oidc = replace(replace(aws_eks_cluster.eks_info.endpoint, "https://", ""), "/\\..*$/", "")
 }
 
-
+data "aws_eks_cluster_auth" "eks" {
+  name = var.cluster_name
+}
