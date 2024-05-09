@@ -15,7 +15,7 @@ data "tls_certificate" "eks-cluster-tls-certificate" {
 data "aws_caller_identity" "current" {}
 locals {
   account_id = data.aws_caller_identity.current.account_id
-  eks_oidc = replace(replace(aws_eks_cluster.eks_info.endpoint, "https://", ""), "/\\..*$/", "")
+  # eks_oidc = replace(replace(aws_eks_cluster.eks_info.endpoint, "https://", ""), "/\\..*$/", "")
 }
 
 
