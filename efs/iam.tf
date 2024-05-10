@@ -19,9 +19,9 @@ resource "aws_iam_role" "efs-csi-role" {
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
-          "${replace(data.aws_iam_openid_connect_provider.eks-cluster-oidc.arn.url, "https://", "")}:sub": "system:serviceaccount:kube-system:efs-csi-node-sa",
-          "${replace(data.aws_iam_openid_connect_provider.eks-cluster-oidc.arn.url, "https://", "")}:sub": "system:serviceaccount:kube-system:efs-csi-controller-sa",
-          "${replace(data.aws_iam_openid_connect_provider.eks-cluster-oidc.arn.url, "https://", "")}:aud": "sts.amazonaws.com"
+          "${replace(data.aws_iam_openid_connect_provider.eks-cluster-oidc.url, "https://", "")}:sub": "system:serviceaccount:kube-system:efs-csi-node-sa",
+          "${replace(data.aws_iam_openid_connect_provider.eks-cluster-oidc.url, "https://", "")}:sub": "system:serviceaccount:kube-system:efs-csi-controller-sa",
+          "${replace(data.aws_iam_openid_connect_provider.eks-cluster-oidc.url, "https://", "")}:aud": "sts.amazonaws.com"
         }
       }
     }
