@@ -32,7 +32,7 @@ storageClasses:
   - tls
   parameters:
     provisioningMode: efs-ap
-    fileSystemId: ""
+    fileSystemId: "sss"
     directoryPerms: "777"
     gidRangeStart: "1000"
     gidRangeEnd: "1000"
