@@ -38,7 +38,7 @@ resource "helm_release" "aws-load-balancer-controller" {
   }
   set {
     name  = "storageClasses.parameters.fileSystemId"
-    value = "fs-1122aabb"
+    value = "${efs_file_system.eks-file-system.id}"
   }
   set {
     name  = "storageClasses.reclaimPolicy"

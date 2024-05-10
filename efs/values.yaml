@@ -8,7 +8,7 @@ controller:
   serviceAccount:
     create: true
     name: efs-csi-controller-sa
-    annotations: {}
+    annotations: 
     ## Enable if EKS IAM for SA is used
     #  eks.amazonaws.com/role-arn: arn:aws:iam::111122223333:role/efs-csi-role
 
@@ -19,7 +19,7 @@ node:
   serviceAccount:
     create: true
     name: efs-csi-node-sa
-    annotations: {}
+    annotations: 
     ## Enable if EKS IAM for SA is used
     #  eks.amazonaws.com/role-arn: arn:aws:iam::111122223333:role/efs-csi-role
 
@@ -32,7 +32,7 @@ storageClasses:
   - tls
   parameters:
     provisioningMode: efs-ap
-    fileSystemId: fs-1122aabb
+    fileSystemId: "fs-1122aabb"
     directoryPerms: "777"
     gidRangeStart: "1000"
     gidRangeEnd: "2000"
