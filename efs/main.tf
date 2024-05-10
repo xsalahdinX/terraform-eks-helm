@@ -14,7 +14,7 @@ resource "helm_release" "aws-efs-csi-driver" {
   }
 
   set {
-    name  = "controller.serviceAccount.annotations"
+    name  = "controller.serviceAccount.annotations.eks.amazonaws.com/role-arn"
     value = "arn:aws:iam::${local.account_id}:role/efs-csi-role-role"
   }
 
@@ -23,7 +23,7 @@ resource "helm_release" "aws-efs-csi-driver" {
     value = "efs-csi-node-sa"
   }
   set {
-    name  = "node.serviceAccount.annotations"
+    name  = "node.serviceAccount.annotations.eks.amazonaws.com/role-arn:"
     value = "arn:aws:iam::${local.account_id}:role/efs-csi-node-role"
   }
 
