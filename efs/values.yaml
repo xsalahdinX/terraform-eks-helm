@@ -33,7 +33,7 @@ storageClasses:
   parameters:
     provisioningMode: efs-ap
     fileSystemId: fs-1122aabb
-    directoryPerms: "700"
+    directoryPerms: "777"
     gidRangeStart: "1000"
     gidRangeEnd: "2000"
     basePath: "/dynamic_provisioning"

@@ -7,17 +7,17 @@ resource "aws_efs_file_system" "eks-file-system" {
 }
 
 resource "aws_efs_mount_target" "foo" {
-  count = length(data.aws_subnet.private_subnets)
+  for_each      = toset(data.aws_subnets.private.ids)
   file_system_id = aws_efs_file_system.eks-file-system.id
-  subnet_id      = data.aws_subnet.private_subnets[count.index].id
+  subnet_id      = each.value
 }
 
 
-data "aws_subnet" "private_subnets" {
+data "aws_subnets" "private_subnets" {
     filter {
     name   = "tag:Name"
     values = ["private_subnets_*"]
   }
-}
 
+}
 
