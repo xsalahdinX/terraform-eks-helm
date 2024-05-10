@@ -3,7 +3,7 @@ resource "helm_release" "aws-load-balancer-controller" {
   namespace  = "kube-system"
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
-  version    = "1.7.1"
+  version    = var.elb_chart_version
   values = [
     "${file("./alb/values.yaml")}"
   ]
