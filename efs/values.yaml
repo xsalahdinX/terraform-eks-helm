@@ -37,7 +37,7 @@ storageClasses:
     fileSystemId: sss
     directoryPerms: "777"
     gidRangeStart: "1000"
-    gidRangeEnd: "1000"
+    gidRangeEnd: "1500"
     basePath: "/dynamic_provisioning"
   reclaimPolicy: Delete
   volumeBindingMode: Immediate
