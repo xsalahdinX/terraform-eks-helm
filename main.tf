@@ -14,6 +14,6 @@ module "alb" {
 }
 
 
-# module "efs" {
-#   source = "./efs"
-# }
+module "efs" {
+  source = "./efs"
+}
