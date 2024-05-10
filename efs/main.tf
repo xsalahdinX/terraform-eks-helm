@@ -36,15 +36,15 @@ resource "helm_release" "aws-efs-csi-driver" {
     name  = "storageClasses.name"
     value = "eks-efs-sc"
   }
-  # set {
-  #   name  = "storageClasses[0].parameters.fileSystemId"
-  #   value = aws_efs_file_system.eks-file-system.id
-  # }
-
-    set {
-    name  = "storageClasses.parameters.fileSystemId"
+  set {
+    name  = "storageClasses[0].parameters.fileSystemId"
     value = aws_efs_file_system.eks-file-system.id
   }
+
+  #   set {
+  #   name  = "storageClasses.parameters.fileSystemId"
+  #   value = aws_efs_file_system.eks-file-system.id
+  # }
   set {
     name  = "storageClasses.reclaimPolicy"
     value = "Delete"
