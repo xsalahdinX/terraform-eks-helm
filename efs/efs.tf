@@ -7,7 +7,7 @@ resource "aws_efs_file_system" "eks-file-system" {
 }
 
 resource "aws_efs_mount_target" "foo" {
-  for_each      = toset(data.aws_subnets.private.ids)
+  for_each      = toset(data.aws_subnets.private_subnets.ids)
   file_system_id = aws_efs_file_system.eks-file-system.id
   subnet_id      = each.value
 }
