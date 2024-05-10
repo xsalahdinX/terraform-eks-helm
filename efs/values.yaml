@@ -8,7 +8,8 @@ controller:
   serviceAccount:
     create: true
     name: efs-csi-controller-sa
-    annotations: 
+    annotations:
+      eks.amazonaws.com/role-arn: 
     ## Enable if EKS IAM for SA is used
     #  eks.amazonaws.com/role-arn: arn:aws:iam::111122223333:role/efs-csi-role
 
@@ -19,7 +20,8 @@ node:
   serviceAccount:
     create: true
     name: efs-csi-node-sa
-    annotations: 
+    annotations:
+      eks.amazonaws.com/role-arn:
     ## Enable if EKS IAM for SA is used
     #  eks.amazonaws.com/role-arn: arn:aws:iam::111122223333:role/efs-csi-role
 
