@@ -1,5 +1,5 @@
-resource "helm_release" "aws-load-balancer-controller" {
-  name       = "aws-load-balancer-controller"
+resource "helm_release" "aws-efs-csi-driver" {
+  name       = "aws-efs-csi-driver"
   namespace  = "kube-system"
   repository = "https://kubernetes-sigs.github.io/aws-efs-csi-driver"
   chart      = "aws-efs-csi-driver"
