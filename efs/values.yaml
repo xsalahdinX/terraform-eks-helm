@@ -1,0 +1,43 @@
+
+replicaCount: 3
+
+## Controller deployment variables
+
+controller:
+  # Specifies whether a service account should be created
+  serviceAccount:
+    create: true
+    name: efs-csi-controller-sa
+    annotations: {}
+    ## Enable if EKS IAM for SA is used
+    #  eks.amazonaws.com/role-arn: arn:aws:iam::111122223333:role/efs-csi-role
+
+## Node daemonset variables
+
+node:
+  # Specifies whether a service account should be created
+  serviceAccount:
+    create: true
+    name: efs-csi-node-sa
+    annotations: {}
+    ## Enable if EKS IAM for SA is used
+    #  eks.amazonaws.com/role-arn: arn:aws:iam::111122223333:role/efs-csi-role
+
+storageClasses: 
+- name: salahdin-efs-sc
+  annotations:
+    # Use that annotation if you want this to your default storageclass
+    storageclass.kubernetes.io/is-default-class: "true"
+  mountOptions:
+  - tls
+  parameters:
+    provisioningMode: efs-ap
+    fileSystemId: fs-1122aabb
+    directoryPerms: "700"
+    gidRangeStart: "1000"
+    gidRangeEnd: "2000"
+    basePath: "/dynamic_provisioning"
+    subPathPattern: "/subPath"
+    ensureUniqueDirectory: true
+  reclaimPolicy: Delete
+  volumeBindingMode: Immediate
