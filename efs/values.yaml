@@ -32,12 +32,10 @@ storageClasses:
   - tls
   parameters:
     provisioningMode: efs-ap
-    fileSystemId: "fs-1122aabb"
+    fileSystemId: ""
     directoryPerms: "777"
     gidRangeStart: "1000"
-    gidRangeEnd: "2000"
+    gidRangeEnd: "1000"
     basePath: "/dynamic_provisioning"
-    subPathPattern: "/subPath"
-    ensureUniqueDirectory: true
   reclaimPolicy: Delete
   volumeBindingMode: Immediate
