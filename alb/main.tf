@@ -9,7 +9,7 @@ resource "helm_release" "aws-load-balancer-controller" {
   ]
 
   set {
-    name  = "serviceAccount.annotations"
+    name  = "serviceAccount.serviceAccount.annotations"
     value = "arn:aws:iam::${local.account_id}:role/alb-ingress-controller"
   }
 
