@@ -14,13 +14,8 @@ resource "aws_efs_mount_target" "foo" {
 
 
 data "aws_subnet" "private_subnets" {
-  filter {
-    name   = "tag-key"
-    values = ["Name"]
-  }
-
-  filter {
-    name   = "tag-value"
+    filter {
+    name   = "tag:Name"
     values = ["private_subnets_*"]
   }
 }
