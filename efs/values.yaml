@@ -26,7 +26,7 @@ node:
     #  eks.amazonaws.com/role-arn: arn:aws:iam::111122223333:role/efs-csi-role
 
 storageClasses: 
-- name: salahdin-efs-sc
+- name: salahdin-efs
   annotations:
     # Use that annotation if you want this to your default storageclass
     storageclass.kubernetes.io/is-default-class: "true"

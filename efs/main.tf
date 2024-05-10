@@ -31,7 +31,7 @@ resource "helm_release" "aws-efs-csi-driver" {
 
   set {
     name  = "storageClasses[0].name"
-    value = "eks-efs-sc"
+    value = "eks-efs"
   }
   set {
     name  = "storageClasses[0].parameters.fileSystemId"
