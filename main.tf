@@ -16,5 +16,5 @@ module "alb" {
 
 module "efs" {
   source = "./efs"
-  depends_on = [ module.alb ]
+  depends_on = [module.alb]
 }
