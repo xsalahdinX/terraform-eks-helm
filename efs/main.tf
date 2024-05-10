@@ -27,13 +27,10 @@ resource "helm_release" "aws-efs-csi-driver" {
     value = "arn:aws:iam::${local.account_id}:role/efs-csi-node-role"
   }
 
-  set {
-    name  = "clusterName"
-    value = var.cluster_name
-  }
+
 
   set {
-    name  = "storageClasses.name"
+    name  = "storageClasses[0].name"
     value = "eks-efs-sc"
   }
   set {
@@ -46,12 +43,12 @@ resource "helm_release" "aws-efs-csi-driver" {
   #   value = aws_efs_file_system.eks-file-system.id
   # }
   set {
-    name  = "storageClasses.reclaimPolicy"
+    name  = "storageClasses[0].reclaimPolicy"
     value = "Delete"
   }
 
   set {
-    name  = "storageClasses.volumeBindingMode"
+    name  = "storageClasses[0].volumeBindingMode"
     value = "Immediate"
   }
 }
