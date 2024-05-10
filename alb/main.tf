@@ -8,19 +8,13 @@ resource "helm_release" "aws-load-balancer-controller" {
     "${file("./alb/values.yaml")}"
   ]
 
-  # set {
-  #   name  = "serviceAccount.annotations"
-  #   value = "true"
-  # }
+  set {
+    name  = "serviceAccount.annotations"
+    value = "arn:aws:iam::${locals.account_id}:role/alb-ingress-controller"
+  }
 
-  # set_list {
-  #   name  = "serviceAccount.annotations"
-  #   value = "{}"
-  # }
-
-  # set {
-  #   name  = "service.annotations.prometheus\\.io/port"
-  #   value = "9127"
-  #   type  = "string"
-  # }
+  set {
+    name  = "clusterName"
+    value = var.cluster_name
+  }
 }

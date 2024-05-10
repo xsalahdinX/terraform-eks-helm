@@ -1,13 +1,12 @@
+data "tls_certificate" "eks-cluster-tls-certificate" {
+  url = local.issuer
+}
+
 data "aws_eks_cluster" "eks_info" {
   name = var.cluster_name
 }
-
 locals {
   issuer = data.aws_eks_cluster.eks_info.identity[0].oidc[0].issuer
-}
-
-data "tls_certificate" "eks-cluster-tls-certificate" {
-  url = local.issuer
 }
 
 
