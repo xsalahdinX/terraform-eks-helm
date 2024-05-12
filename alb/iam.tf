@@ -4,28 +4,6 @@ resource "aws_iam_policy" "ALBIngressControllerIAMPolicy" {
     policy = file("./alb/iam-policy.json")
 }
 
-
-resource "aws_iam_openid_connect_provider" "eks-cluster-oidc" {
-  client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = [data.tls_certificate.eks-cluster-tls-certificate.certificates[0].sha1_fingerprint]
-  url             = local.issuer
-}
-
-locals {
-  issuer = data.aws_eks_cluster.eks_info.identity[0].oidc[0].issuer
-}
-
-
-data "tls_certificate" "eks-cluster-tls-certificate" {
-  url = local.issuer
-}
-
-
-
-
-
-
-
 resource "aws_iam_role" "alb-ingress-controller-role" {
   name = "alb-ingress-controller"
 
