@@ -1,7 +1,7 @@
 resource "aws_iam_policy" "ALBIngressControllerIAMPolicy" {
     name = "AWSLoadBalancerControllerIAMPolicy"
     description = "Allow ELB to describe and modify its load balancers"
-    policy = file("./alb/iam-policy.json")
+    policy = file("./../alb/iam-policy.json")
 }
 
 resource "aws_iam_role" "alb-ingress-controller-role" {

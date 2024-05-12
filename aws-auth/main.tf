@@ -1,6 +1,6 @@
 resource "helm_release" "aws_auth" {
   name       = "aws-auth"
-  chart      = "./charts/aws-auth"
+  chart      = "./../charts/aws-auth"
   depends_on = [ kubernetes_annotations.aws_auth_annotations ]
   
   
