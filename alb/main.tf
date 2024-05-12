@@ -5,7 +5,7 @@ resource "helm_release" "aws-load-balancer-controller" {
   chart      = "aws-load-balancer-controller"
   version    = var.elb_chart_version
   values = [
-    "${file("./../alb/values.yaml")}"
+    "${file("./alb/values.yaml")}"
   ]
 
   set {

@@ -5,7 +5,7 @@ resource "helm_release" "aws-efs-csi-driver" {
   chart      = "aws-efs-csi-driver"
   version    = "3.0.3"
   values = [
-    "${file("./../efs/values.yaml")}"
+    "${file("./efs/values.yaml")}"
   ]
 
   set {
