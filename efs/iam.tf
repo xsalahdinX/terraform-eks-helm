@@ -1,8 +1,3 @@
-data "aws_iam_openid_connect_provider" "eks-cluster-oidc" {
-  url = local.issuer
-}
-
-
 resource "aws_iam_role" "efs-csi-role" {
   name = "efs-csi-role-role"
   

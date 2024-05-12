@@ -11,6 +11,20 @@ resource "aws_iam_openid_connect_provider" "eks-cluster-oidc" {
   url             = local.issuer
 }
 
+locals {
+  issuer = data.aws_eks_cluster.eks_info.identity[0].oidc[0].issuer
+}
+
+
+data "tls_certificate" "eks-cluster-tls-certificate" {
+  url = local.issuer
+}
+
+
+
+
+
+
 
 resource "aws_iam_role" "alb-ingress-controller-role" {
   name = "alb-ingress-controller"
@@ -23,7 +37,7 @@ resource "aws_iam_role" "alb-ingress-controller-role" {
       "Sid": "",
       "Effect": "Allow",
       "Principal": {
-        "Federated": "${aws_iam_openid_connect_provider.eks-cluster-oidc.arn}"
+        "Federated": "${data.aws_iam_openid_connect_provider.eks-cluster-oidc.arn}"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
