@@ -15,8 +15,8 @@ resource "aws_iam_role" "efs-csi-role" {
       "Condition": {
         "StringEquals": {
           "${replace(data.aws_iam_openid_connect_provider.eks-cluster-oidc.url, "https://", "")}:sub":[
-            "system:serviceaccount:kube-system:efs-csi-node-sa",
-            "system:serviceaccount:kube-system:efs-csi-controller-sa"
+            "system:serviceaccount:efs-driver:efs-csi-node-sa",
+            "system:serviceaccount:efs-driver:efs-csi-controller-sa"
           ]
         }
       }
