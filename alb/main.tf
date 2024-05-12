@@ -1,6 +1,6 @@
 resource "helm_release" "aws-load-balancer-controller" {
-  name       = "aws-load-balancer-controller"
-  namespace  = "load-balancer-controller"
+  name       = "alb-controller"
+  namespace  = "alb-controller"
   create_namespace = true
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
