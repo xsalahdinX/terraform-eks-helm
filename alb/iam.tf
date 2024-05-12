@@ -20,16 +20,14 @@ resource "aws_iam_role" "alb-ingress-controller-role" {
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
-          "${replace(aws_iam_openid_connect_provider.eks-cluster-oidc.url, "https://", "")}:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller",
-          "${replace(aws_iam_openid_connect_provider.eks-cluster-oidc.url, "https://", "")}:aud": "sts.amazonaws.com"
+          "${replace(data.aws_iam_openid_connect_provider.eks-cluster-oidc.url, "https://", "")}:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller",
+          "${replace(data.aws_iam_openid_connect_provider.eks-cluster-oidc.url, "https://", "")}:aud": "sts.amazonaws.com"
         }
       }
     }
   ]
 }
 POLICY
-
-  depends_on = [aws_iam_openid_connect_provider.eks-cluster-oidc]
 
   tags = {
     "ServiceAccountName" = "alb-ingress-controller"
