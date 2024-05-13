@@ -28,7 +28,7 @@ resource "aws_iam_policy" "ALBIngressControllerIAMPolicy" {
 resource "aws_iam_role" "alb-ingress-controller-role" {
   name = "${var.eks-alb-role-name}"
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
-  tags = {"ServiceAccountName" = "${alb-serviceaccount}", "ServiceAccountNameSpace" = "${var.alb-namespace}"}
+  tags = {"ServiceAccountName" = "${var.alb-serviceaccount}", "ServiceAccountNameSpace" = "${var.alb-namespace}"}
   depends_on = [ aws_iam_policy.ALBIngressControllerIAMPolicy ]
 }
 resource "aws_iam_role_policy_attachment" "alb-ingress-controller-role-ALBIngressControllerIAMPolicy" {
