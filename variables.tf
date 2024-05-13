@@ -18,8 +18,8 @@ variable "region" {
 
 
 variable "cluster_name" {
-    description = "The name of the EKS cluster."
-    type = string
-    default = "eks"
-  
+  description = "The name of the EKS cluster."
+  type        = string
+  default     = "eks"
+
 }

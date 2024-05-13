@@ -8,9 +8,14 @@ module "aws_auth" {
 
 
 module "alb" {
-  source            = "./alb"
-  cluster_name      = "eks"
-  elb_chart_version = "1.7.1"
+  source              = "./alb"
+  cluster_name        = "eks"
+  elb_chart_version   = "1.7.1"
+  alb_sa              = "alb-controller-sa"
+  alb_namespace       = "alb-controller"
+  eks_alb_policy_name = "eks-alb-controller-policy"
+  eks_alb_role_name   = "eks-alb-controller-role"
+
 }
 
 
