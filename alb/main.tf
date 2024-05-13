@@ -8,7 +8,7 @@ resource "helm_release" "aws-load-balancer-controller" {
   values = ["${file("./alb/values.yaml")}"]
   set {
     name  = "serviceAccount.name"
-    value = "${var.alb-sa}"
+    value = "${alb-serviceaccount}"
   }
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"

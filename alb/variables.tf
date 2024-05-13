@@ -12,7 +12,7 @@ variable "elb_chart_version" {
   
 }
 
-variable "alb-sa"   {
+variable "alb-serviceaccount"   {
     description = "The name of the service account for the AWS Load Balancer Controller."
     type = string
     default = "alb-controller-sa"

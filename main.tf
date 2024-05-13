@@ -12,7 +12,7 @@ module "alb" {
   elb_chart_version   = "1.7.1"
   cluster_name = "eks"
   alb-namespace = "alb-controller"
-  alb-sa = "alb-controller-sa"
+  alb-serviceaccount = "alb-controller-sa"
   eks-alb-policy-name = "eks-alb-controller-policy"
   eks-alb-role-name = "eks-alb-controller-role"
 }
