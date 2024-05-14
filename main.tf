@@ -10,11 +10,11 @@ module "aws_auth" {
 module "alb" {
   source              = "./alb"
   elb_chart_version   = "1.7.1"
-  cluster_name = "eks"
-  alb-namespace = "alb-controller"
-  alb-serviceaccount = "alb-controller-sa"
+  cluster_name        = "eks"
+  alb-namespace       = "alb-controller"
+  alb-serviceaccount  = "alb-controller-sa"
   eks-alb-policy-name = "eks-alb-controller-policy"
-  eks-alb-role-name = "eks-alb-controller-role"
+  eks-alb-role-name   = "eks-alb-controller-role"
 }
 
 
@@ -22,4 +22,14 @@ module "efs" {
   source = "./efs"
 }
 
+module "s3" {
+  source = "./s3"
+  cluster_name = "eks"
+  s3-controller-role-name = "s3-controller-role"
+  s3-controller-serviceaccount = "s3-csi"
+  s3-controller-namespace = "s3-controller"
+  s3-bucket-name = "s3-bucket"
+  s3-bucket-policy-name = "s3-bucket-policy"
+
+}
 
