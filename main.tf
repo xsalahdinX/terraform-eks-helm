@@ -28,7 +28,7 @@ module "s3" {
   s3-controller-role-name = "s3-controller-role"
   s3-controller-serviceaccount = "s3-csi"
   s3-controller-namespace = "s3-controller"
-  s3-bucket-name = "s3-bucket"
+  s3-bucket-name = "azzgamilsalahgg-s3-bucket"
   s3-controller-policy-name = "s3-controller-policy"
 
 }

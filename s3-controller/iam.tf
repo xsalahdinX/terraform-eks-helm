@@ -1,6 +1,5 @@
 resource "aws_s3_bucket" "s3_bucket" {
   bucket = var.s3-bucket-name
-
   tags = {
     Name        = "My bucket"
     Environment = "Dev"
