@@ -23,13 +23,13 @@ module "efs" {
 }
 
 module "s3" {
-  source = "./s3"
+  source = "./s3-controller"
   cluster_name = "eks"
   s3-controller-role-name = "s3-controller-role"
   s3-controller-serviceaccount = "s3-csi"
   s3-controller-namespace = "s3-controller"
   s3-bucket-name = "s3-bucket"
-  s3-bucket-policy-name = "s3-bucket-policy"
+  s3-controller-policy-name = "s3-controller-policy"
 
 }
 
