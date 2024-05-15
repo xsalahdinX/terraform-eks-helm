@@ -28,7 +28,8 @@ resource "aws_iam_policy" "bucket_policy" {
         "Sid" : "MountpointFullObjectAccess",
         "Effect" : "Allow",
         "Action" : [
-          "s3:GetObject"
+          "s3:PutObject",
+          "s3:PutObjectAcl"
         ],
         "Resource" : [
           "arn:aws:s3:::${var.s3-bucket-name}/*"
