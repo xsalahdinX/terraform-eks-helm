@@ -49,7 +49,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
     condition {
       test     = "StringEquals"
       variable = "${replace(data.aws_iam_openid_connect_provider.eks-cluster-oidc.url, "https://", "")}:sub"
-      values   = ["system:serviceaccount:kube-system:s3-csi-*"]
+      values   = ["system:serviceaccount:kube-system:s3-csi-driver-sa"]
     }
     condition {
       test     = "StringEquals"
@@ -80,4 +80,11 @@ resource "aws_eks_addon" "s3-controller-addon" {
   addon_version               = "v1.5.1-eksbuild.1" #e.g., previous version v1.9.3-eksbuild.3 and the new version is v1.10.1-eksbuild.1
   resolve_conflicts_on_update = "PRESERVE"
   service_account_role_arn = aws_iam_role.s3-controller-role.arn
+}
+
+
+resource "aws_iam_role_policy_attachment" "s3-controller-policy-attachment" {
+  policy_arn = aws_iam_policy.bucket_policy.arn
+  role       = aws_iam_role.s3-controller-role.name
+  depends_on = [aws_iam_role.s3-controller-role]
 }
