@@ -44,17 +44,7 @@ resource "aws_iam_policy" "bucket_policy" {
         "Resource" : [
           "arn:aws:s3:::${var.s3-bucket-name}/*"
         ]
-      },
-       {
-           "Sid": "KMSAccess",
-           "Effect": "Allow",
-           "Action": [
-               "kms:Decrypt",
-           ],
-           "Resource": [
-               "${aws_kms_key.mykey.arn}"
-           ]
-       }
+      }
     ]
   })
 }
