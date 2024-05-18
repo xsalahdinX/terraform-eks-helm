@@ -37,13 +37,13 @@ locals {
       {
         "Action": "s3:GetObject",
         "Effect": "Allow",
-        "Resource": "arn:aws:s3:::${s3-bucket-name}/*",
+        "Resource": "arn:aws:s3:::${var.s3-bucket-name}/*",
         "Principal": "*"
       },
       {
         "Action": "s3:*",
         "Effect": "Deny",
-        "Resource": "arn:aws:s3:::${s3-bucket-name}/*",
+        "Resource": "arn:aws:s3:::${var.s3-bucket-name}/*",
         "Principal": "*",
         "Condition": {
           "StringNotEquals": {
