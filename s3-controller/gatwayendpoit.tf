@@ -31,27 +31,17 @@ data "aws_vpc" "eks-vpc" {
 
 locals {
   s3-endpoint-policy = <<POLICY
-  {
-    "Version": "2008-10-17",
-    "Statement": [
-      {
-        "Action": "s3:GetObject",
-        "Effect": "Allow",
-        "Resource": "arn:aws:s3:::${var.s3-bucket-name}/*",
-        "Principal": "*"
-      },
-      {
-        "Action": "s3:*",
-        "Effect": "Deny",
-        "Resource": "arn:aws:s3:::${var.s3-bucket-name}/*",
-        "Principal": "*",
-        "Condition": {
-          "StringNotEquals": {
-            "s3:action": "s3:GetObject"
-          }
-        }
-      }
-    ]
-  }
-  POLICY
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "AllowAllActionsToAllPrincipals",
+			"Effect": "Allow",
+			"Principal": "*",
+			"Action": "*",
+			"Resource": "*"
+		}
+	]
+}
+POLICY
 }
