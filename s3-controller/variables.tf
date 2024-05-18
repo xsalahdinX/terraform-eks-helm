@@ -1,23 +1,23 @@
-variable    "s3-controller-policy-name" {
+variable "s3-controller-policy-name" {
   description = "The name of the policy for the S3 controller"
   default     = "s3_controller_policy"
 }
-variable    "s3-controller-role-name" {
+variable "s3-controller-role-name" {
   description = "The name of the role for the S3 controller"
   default     = "s3-controller-role"
 }
-variable    "s3-controller-serviceaccount" {
+variable "s3-controller-serviceaccount" {
   description = "The name of the service account for the S3 controller"
   default     = "s3-controller"
 }
-variable    "s3-controller-namespace" {
+variable "s3-controller-namespace" {
   description = "The namespace of the service account for the S3 controller"
   default     = "default"
 }
 
 variable "cluster_name" {
   description = "The name of the EKS cluster"
-  default = "eks"
+  default     = "eks"
 
 }
 variable "s3-bucket-name" {
@@ -26,6 +26,6 @@ variable "s3-bucket-name" {
 
 variable "region" {
   description = "The region of the S3 bucket"
-  default = "us-east-1"
-  
+  default     = "us-east-1"
+
 }

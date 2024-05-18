@@ -4,7 +4,7 @@ resource "aws_kms_key" "mykey" {
 
 resource "aws_s3_bucket" "s3_bucket" {
   bucket = var.s3-bucket-name
-  tags = {Name = "My bucket", Environment = "Dev"}
+  tags   = { Name = "My bucket", Environment = "Dev" }
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "s3-conifgration" {
@@ -77,8 +77,8 @@ data "aws_iam_policy_document" "assume_role_policy" {
 resource "aws_iam_role" "s3-controller-role" {
   name               = var.s3-controller-role-name
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
-  tags = {"ServiceAccountName" = var.s3-controller-serviceaccount, "ServiceAccountNameSpace" = var.s3-controller-namespace}
-  depends_on = [ aws_iam_policy.bucket_policy ]
+  tags               = { "ServiceAccountName" = var.s3-controller-serviceaccount, "ServiceAccountNameSpace" = var.s3-controller-namespace }
+  depends_on         = [aws_iam_policy.bucket_policy]
 }
 
 
@@ -87,7 +87,7 @@ resource "aws_eks_addon" "s3-controller-addon" {
   addon_name                  = "aws-mountpoint-s3-csi-driver"
   addon_version               = "v1.5.1-eksbuild.1" #e.g., previous version v1.9.3-eksbuild.3 and the new version is v1.10.1-eksbuild.1
   resolve_conflicts_on_update = "PRESERVE"
-  service_account_role_arn = aws_iam_role.s3-controller-role.arn
+  service_account_role_arn    = aws_iam_role.s3-controller-role.arn
 }
 
 
