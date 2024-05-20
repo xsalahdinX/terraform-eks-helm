@@ -2,38 +2,41 @@ resource "aws_iam_policy" "service-account-policy" {
   name        = "s3_controller_policy"
   path        = "/"
   description = "My s3 policy"
- policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Sid" : "MountpointFullBucketAccess",
-        "Effect" : "Allow",
-        "Action" : [
-          "s3:ListBucket"
-        ],
-        "Resource" : [
-          "arn:aws:s3:::${var.s3-bucket-name}"
-        ]
-      },
-      {
-        "Sid" : "MountpointFullObjectAccess",
-        "Effect" : "Allow",
-        "Action" : [
-          "s3:GetObject"
-        ],
-        "Resource" : [
-          "arn:aws:s3:::${var.s3-bucket-name}/*"
-        ]
-      },
-      {
-        "Sid" : "FullKMSAccess",
-        "Effect" : "Allow",
-        "Action" : "kms:*",
-        "Resource" : "*"
-      }
-    ]
-  })
-}
+  policy = jsonencode({
+      "Version" : "2012-10-17",
+      "Statement" : [
+        {
+          "Sid" : "MountpointFullBucketAccess",
+          "Effect" : "Allow",
+          "Action" : [
+            "s3:ListBucket"
+          ],
+          "Resource" : [
+            "arn:aws:s3:::${var.s3-bucket-name}"
+          ]
+        },
+        {
+          "Sid" : "MountpointFullObjectAccess",
+          "Effect" : "Allow",
+          "Action" : [
+            "s3:GetObject"
+          ],
+          "Resource" : [
+            "arn:aws:s3:::${var.s3-bucket-name}/*"
+          ]
+        },
+        {
+          "Sid" : "FullKMSAccess",
+          "Effect" : "Allow",
+          "Action": [
+            "kms:Decrypt",
+            "kms:DescribeKey"
+          ],
+          "Resource" : "${var.kms-key-arn}"
+        }
+      ]
+    })
+  }
 
 data "aws_iam_policy_document" "assume_role_policy" {
   statement {

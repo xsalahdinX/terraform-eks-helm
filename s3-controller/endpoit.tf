@@ -32,16 +32,32 @@ data "aws_vpc" "eks-vpc" {
 locals {
   s3-endpoint-policy = <<POLICY
 {
-	"Version": "2012-10-17",
-	"Statement": [
-		{
-			"Sid": "AllowAllActionsToAllPrincipals",
-			"Effect": "Allow",
-			"Principal": "*",
-			"Action": "s3:*",
-			"Resource": ["arn:aws:s3:::${var.s3-bucket-name}", "arn:aws:s3:::${var.s3-bucket-name}/*"]
-		}
-	]
+   "Version": "2012-10-17",
+   "Statement": [
+        {
+            "Sid": "MountpointFullBucketAccess",
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::${var.s3-bucket-name}"
+            ]
+        },
+        {
+            "Sid": "MountpointFullObjectAccess",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:AbortMultipartUpload",
+                "s3:DeleteObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::${var.s3-bucket-name}/*"
+            ]
+        }
+   ]
 }
 POLICY
 }

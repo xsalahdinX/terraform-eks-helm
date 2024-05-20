@@ -30,6 +30,7 @@ module "s3" {
   s3-controller-namespace = "s3-controller"
   s3-bucket-name = "azzgamilsalahgg-s3-bucket"
   s3-controller-policy-name = "s3-controller-policy"
+  kms-key-arn = "arn:aws:kms:us-east-1:905418093184:key/36079170-58e5-4098-9852-c97fc9488b12"
 
 }
 

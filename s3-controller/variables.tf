@@ -29,3 +29,6 @@ variable "region" {
   default     = "us-east-1"
 
 }
+variable "kms-key-arn" {
+  description = "The ARN of the KMS key"
+}
