@@ -2,7 +2,7 @@ resource "aws_iam_policy" "service-account-policy" {
   name        = "s3_controller_policy"
   path        = "/"
   description = "My s3 policy"
-  policy = jsonencode({
+ policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
       {
@@ -24,6 +24,12 @@ resource "aws_iam_policy" "service-account-policy" {
         "Resource" : [
           "arn:aws:s3:::${var.s3-bucket-name}/*"
         ]
+      },
+      {
+        "Sid" : "FullKMSAccess",
+        "Effect" : "Allow",
+        "Action" : "kms:*",
+        "Resource" : "*"
       }
     ]
   })
@@ -60,16 +66,6 @@ resource "aws_iam_role" "s3-controller-role" {
   tags               = { "ServiceAccountName" = var.s3-controller-serviceaccount, "ServiceAccountNameSpace" = var.s3-controller-namespace }
   depends_on         = [aws_iam_policy.service-account-policy]
 }
-
-
-resource "aws_eks_addon" "s3-controller-addon" {
-  cluster_name                = var.cluster_name
-  addon_name                  = "aws-mountpoint-s3-csi-driver"
-  addon_version               = "v1.5.1-eksbuild.1" #e.g., previous version v1.9.3-eksbuild.3 and the new version is v1.10.1-eksbuild.1
-  resolve_conflicts_on_update = "PRESERVE"
-  service_account_role_arn    = aws_iam_role.s3-controller-role.arn
-}
-
 
 resource "aws_iam_role_policy_attachment" "s3-controller-policy-attachment" {
   policy_arn = aws_iam_policy.service-account-policy.arn
