@@ -38,8 +38,8 @@ locals {
 			"Sid": "AllowAllActionsToAllPrincipals",
 			"Effect": "Allow",
 			"Principal": "*",
-			"Action": "*",
-			"Resource": "*"
+			"Action": "s3:*",
+			"Resource": ["arn:aws:s3:::${var.s3-bucket-name}", "arn:aws:s3:::${var.s3-bucket-name}/*"]
 		}
 	]
 }
