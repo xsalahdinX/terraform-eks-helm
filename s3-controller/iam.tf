@@ -72,7 +72,7 @@ resource "aws_eks_addon" "s3-controller-addon" {
 
 
 resource "aws_iam_role_policy_attachment" "s3-controller-policy-attachment" {
-  policy_arn = aws_iam_policy.bucket_policy.arn
+  policy_arn = aws_iam_policy.service-account-policy.arn
   role       = aws_iam_role.s3-controller-role.name
   depends_on = [aws_iam_role.s3-controller-role]
 }
