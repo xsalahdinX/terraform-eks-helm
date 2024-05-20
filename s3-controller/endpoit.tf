@@ -38,8 +38,17 @@ locals {
 			"Sid": "AllowAllActionsToAllPrincipals",
 			"Effect": "Allow",
 			"Principal": "*",
-			"Action": [ "s3:GetObject", "s3:PutObject", "s3:AbortMultipartUpload" ],
-			"Resource": ["arn:aws:s3:::${var.s3-bucket-name}", "arn:aws:s3:::${var.s3-bucket-name}/*"]
+			"Action": [
+				"s3:List*",
+				"s3:Get*",
+				"s3-object-lambda:List*",
+				"s3-object-lambda:Get*",
+				"s3:Put*"
+			],
+			"Resource": [
+				"arn:aws:s3:::azzgamilsalahgg-s3-bucket",
+				"arn:aws:s3:::azzgamilsalahgg-s3-bucket/*"
+			]
 		}
 	]
 }
