@@ -58,7 +58,7 @@ resource "aws_iam_role" "s3-controller-role" {
   name               = var.s3-controller-role-name
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
   tags               = { "ServiceAccountName" = var.s3-controller-serviceaccount, "ServiceAccountNameSpace" = var.s3-controller-namespace }
-  depends_on         = [aws_iam_policy.bucket_policy]
+  depends_on         = [aws_iam_policy.service-account-policy]
 }
 
 
