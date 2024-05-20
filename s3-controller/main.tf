@@ -9,13 +9,8 @@ resource "aws_s3_bucket" "s3_bucket" {
 }
 
 
-resource "aws_s3_bucket" "default" {
-  bucket        = var.s3-bucket-name
-  force_destroy = true
-}
-
 resource "aws_s3_bucket_ownership_controls" "default" {
-  bucket = aws_s3_bucket.default.id
+  bucket = aws_s3_bucket.s3_bucket.id
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
@@ -23,7 +18,7 @@ resource "aws_s3_bucket_ownership_controls" "default" {
 
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "s3_encrypted" {
-  bucket   = aws_s3_bucket.default.bucket
+  bucket   = aws_s3_bucket.s3_bucket.bucket
   rule {
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
@@ -32,7 +27,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "s3_encrypted" {
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "kms_encrypted" {
-  bucket   = aws_s3_bucket.default.bucket
+  bucket   = aws_s3_bucket.s3_bucket.bucket
 
   rule {
     apply_server_side_encryption_by_default {
