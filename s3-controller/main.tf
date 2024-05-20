@@ -47,7 +47,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "kms_encrypted" {
 
 resource "aws_s3_bucket_policy" "default" {
   bucket = aws_s3_bucket.s3_bucket.id
-  policy = data.aws_iam_policy_document.s3-policy
+  policy = data.aws_iam_policy_document.s3-policy.json
 }
 
 resource "aws_s3_bucket_public_access_block" "default" {
