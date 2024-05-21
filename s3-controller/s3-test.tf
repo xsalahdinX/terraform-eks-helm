@@ -102,3 +102,9 @@ data "aws_iam_policy_document" "s3-policy" {
     }
   }
 }
+
+
+output "kms_key_arn" {
+  value = kms_key_arn.mykey.arn
+  
+}
