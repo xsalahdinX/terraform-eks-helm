@@ -30,7 +30,7 @@ module "s3" {
   s3-controller-namespace = "s3-controller"
   s3-bucket-name = "azzgamilsalahgg-s3-bucket"
   s3-controller-policy-name = "s3-controller-policy"
-  kms-key-arn = aws_kms_key.mykey.arn
+  kms-key-arn = module.s3.kms_key_arn.mykey.arn
 
 }
 
