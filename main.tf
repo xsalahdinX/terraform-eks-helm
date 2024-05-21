@@ -35,4 +35,12 @@ module "s3" {
 
 
 }
+ module "gatway-s3" {
+  source = "./gateway-endpoint"
+  region = "us-east-1"
+  s3-bucket-name = "azzgamilsalahgg-s3-bucket"
+
+   
+ }
+
 
