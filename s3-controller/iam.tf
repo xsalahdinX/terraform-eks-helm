@@ -2,41 +2,8 @@ resource "aws_iam_policy" "service-account-policy" {
   name        = "s3_controller_policy"
   path        = "/"
   description = "My s3 policy"
-  policy = jsonencode({
-      "Version" : "2012-10-17",
-      "Statement" : [
-        {
-          "Sid" : "MountpointFullBucketAccess",
-          "Effect" : "Allow",
-          "Action" : [
-            "s3:ListBucket"
-          ],
-          "Resource" : [
-            "arn:aws:s3:::${var.s3-bucket-name}"
-          ]
-        },
-        {
-          "Sid" : "MountpointFullObjectAccess",
-          "Effect" : "Allow",
-          "Action" : [
-            "s3:GetObject"
-          ],
-          "Resource" : [
-            "arn:aws:s3:::${var.s3-bucket-name}/*"
-          ]
-        },
-        {
-          "Sid" : "FullKMSAccess",
-          "Effect" : "Allow",
-          "Action": [
-            "kms:Decrypt",
-            "kms:DescribeKey"
-          ],
-          "Resource" : "${var.kms-key-arn}"
-        }
-      ]
-    })
-  }
+  policy = local.policy_arn
+}
 
 data "aws_iam_policy_document" "assume_role_policy" {
   statement {
@@ -74,4 +41,45 @@ resource "aws_iam_role_policy_attachment" "s3-controller-policy-attachment" {
   policy_arn = aws_iam_policy.service-account-policy.arn
   role       = aws_iam_role.s3-controller-role.name
   depends_on = [aws_iam_role.s3-controller-role]
+}
+
+
+locals {
+  policy_arn = <<POLICY
+
+  {
+      "Version" : "2012-10-17",
+      "Statement" : [
+        {
+          "Sid" : "MountpointFullBucketAccess",
+          "Effect" : "Allow",
+          "Action" : [
+            "s3:ListBucket"
+          ],
+          "Resource" : [
+            "arn:aws:s3:::${var.s3-bucket-name}"
+          ]
+        },
+        {
+          "Sid" : "MountpointFullObjectAccess",
+          "Effect" : "Allow",
+          "Action" : [
+            "s3:GetObject"
+          ],
+          "Resource" : [
+            "arn:aws:s3:::${var.s3-bucket-name}/*"
+          ]
+        },
+        {
+          "Sid" : "FullKMSAccess",
+          "Effect" : "Allow",
+          "Action": [
+            "kms:Decrypt",
+            "kms:DescribeKey"
+          ],
+          "Resource" : "${var.kms-key-arn}"
+        }
+      ]
+  }
+POLICY
 }
