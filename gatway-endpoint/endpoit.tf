@@ -43,8 +43,8 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
     ]
 
     resources = [
-      "arn:aws:s3:::azzgamilsalahgg-s3-bucket",
-      "arn:aws:s3:::azzgamilsalahgg-s3-bucket/*"
+      "${var.s3-bucket-name}",
+      "${var.s3-bucket-name}/*"
     ]
 
     principals {

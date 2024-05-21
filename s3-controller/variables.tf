@@ -8,7 +8,7 @@ variable "s3-controller-role-name" {
 }
 variable "s3-controller-serviceaccount" {
   description = "The name of the service account for the S3 controller"
-  default     = "s3-controller"
+  default     = "s3-csi-driver-sa"
 }
 variable "s3-controller-namespace" {
   description = "The namespace of the service account for the S3 controller"
@@ -24,11 +24,6 @@ variable "s3-bucket-name" {
   description = "The name of the S3 bucket"
 }
 
-variable "region" {
-  description = "The region of the S3 bucket"
-  default     = "us-east-1"
-
-}
 variable "kms-key-arn" {
   description = "The ARN of the KMS key"
 }

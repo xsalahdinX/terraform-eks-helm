@@ -1,4 +1,38 @@
-resource "aws_iam_policy" "service-account-policy" {
+data "aws_iam_policy_document" "s3-controller-policy" {
+  statement {
+    sid    = "MountpointFullBucketAccess"
+    effect = "Allow"
+    actions = [
+      "s3:ListBucket"
+    ]
+    resources = [
+      "arn:aws:s3:::${var.s3-bucket-name}"
+    ]
+  }
+  statement {
+    sid    = "MountpointFullObjectAccess"
+    effect = "Allow"
+    actions = [
+      "s3:GetObject"
+    ]
+    resources = [
+      "arn:aws:s3:::${var.s3-bucket-name}/*"
+    ]
+  }
+  statement {
+    sid    = "FullKMSAccess"
+    effect = "Allow"
+    actions = [
+      "kms:Decrypt",
+      "kms:DescribeKey"
+    ]
+    resources = [
+      "${var.kms-key-arn}"
+    ]
+  }
+}
+
+resource "aws_iam_policy" "s3-controller-policy" {
   name        = "s3_controller_policy"
   path        = "/"
   description = "My s3 policy"
@@ -34,55 +68,11 @@ resource "aws_iam_role" "s3-controller-role" {
   name               = var.s3-controller-role-name
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
   tags               = { "ServiceAccountName" = var.s3-controller-serviceaccount, "ServiceAccountNameSpace" = var.s3-controller-namespace }
-  depends_on         = [aws_iam_policy.service-account-policy]
+  depends_on         = [aws_iam_policy.s3-controller-policy]
 }
 
 resource "aws_iam_role_policy_attachment" "s3-controller-policy-attachment" {
-  policy_arn = aws_iam_policy.service-account-policy.arn
+  policy_arn = aws_iam_policy.s3-controller-policy.arn
   role       = aws_iam_role.s3-controller-role.name
   depends_on = [aws_iam_role.s3-controller-role]
-}
-
-
-
-data "aws_iam_policy_document" "s3-controller-policy" {
-  statement {
-    sid    = "MountpointFullBucketAccess"
-    effect = "Allow"
-
-    actions = [
-      "s3:ListBucket"
-    ]
-
-    resources = [
-      "arn:aws:s3:::${var.s3-bucket-name}"
-    ]
-  }
-
-  statement {
-    sid    = "MountpointFullObjectAccess"
-    effect = "Allow"
-
-    actions = [
-      "s3:GetObject"
-    ]
-
-    resources = [
-      "arn:aws:s3:::${var.s3-bucket-name}/*"
-    ]
-  }
-
-  statement {
-    sid    = "FullKMSAccess"
-    effect = "Allow"
-
-    actions = [
-      "kms:Decrypt",
-      "kms:DescribeKey"
-    ]
-
-    resources = [
-      "${var.kms-key-arn}"
-    ]
-  }
 }
