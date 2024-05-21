@@ -2,7 +2,7 @@ resource "aws_iam_policy" "service-account-policy" {
   name        = "s3_controller_policy"
   path        = "/"
   description = "My s3 policy"
-  policy = local.policy_arn
+  policy = data.aws_iam_policy_document.s3-controller-policy.json
 }
 
 data "aws_iam_policy_document" "assume_role_policy" {
@@ -44,42 +44,45 @@ resource "aws_iam_role_policy_attachment" "s3-controller-policy-attachment" {
 }
 
 
-locals {
-  policy_arn = <<POLICY
 
-  {
-      "Version" : "2012-10-17",
-      "Statement" : [
-        {
-          "Sid" : "MountpointFullBucketAccess",
-          "Effect" : "Allow",
-          "Action" : [
-            "s3:ListBucket"
-          ],
-          "Resource" : [
-            "arn:aws:s3:::${var.s3-bucket-name}"
-          ]
-        },
-        {
-          "Sid" : "MountpointFullObjectAccess",
-          "Effect" : "Allow",
-          "Action" : [
-            "s3:GetObject"
-          ],
-          "Resource" : [
-            "arn:aws:s3:::${var.s3-bucket-name}/*"
-          ]
-        },
-        {
-          "Sid" : "FullKMSAccess",
-          "Effect" : "Allow",
-          "Action": [
-            "kms:Decrypt",
-            "kms:DescribeKey"
-          ],
-          "Resource" : "${var.kms-key-arn}"
-        }
-      ]
+data "aws_iam_policy_document" "s3-controller-policy" {
+  statement {
+    sid    = "MountpointFullBucketAccess"
+    effect = "Allow"
+
+    actions = [
+      "s3:ListBucket"
+    ]
+
+    resources = [
+      "arn:aws:s3:::${var.s3-bucket-name}"
+    ]
   }
-POLICY
+
+  statement {
+    sid    = "MountpointFullObjectAccess"
+    effect = "Allow"
+
+    actions = [
+      "s3:GetObject"
+    ]
+
+    resources = [
+      "arn:aws:s3:::${var.s3-bucket-name}/*"
+    ]
+  }
+
+  statement {
+    sid    = "FullKMSAccess"
+    effect = "Allow"
+
+    actions = [
+      "kms:Decrypt",
+      "kms:DescribeKey"
+    ]
+
+    resources = [
+      "${var.kms-key-arn}"
+    ]
+  }
 }
