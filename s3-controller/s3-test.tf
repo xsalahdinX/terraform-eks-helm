@@ -5,6 +5,7 @@ resource "aws_kms_key" "mykey" {
 
 resource "aws_s3_bucket" "s3_bucket" {
   bucket = var.s3-bucket-name
+  force_destroy = true
   tags   = { Name = "My bucket", Environment = "Dev" }
 }
 

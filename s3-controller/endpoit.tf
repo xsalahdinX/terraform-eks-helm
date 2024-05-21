@@ -3,7 +3,7 @@ resource "aws_vpc_endpoint" "s3" {
   service_name      = "com.amazonaws.${var.region}.s3"
   route_table_ids   = [data.aws_route_table.private-aws_route_table.id]
   vpc_endpoint_type = "Gateway"
-  policy            = local.s3-endpoint-policy
+  policy            = data.aws_iam_policy_document.s3_endpoint_policy.json
   tags              = { Name = "app-vpce-s3" }
 
 }
@@ -29,28 +29,27 @@ data "aws_vpc" "eks-vpc" {
 
 }
 
-locals {
-  s3-endpoint-policy = <<POLICY
-{
-	"Version": "2012-10-17",
-	"Statement": [
-		{
-			"Sid": "AllowAllActionsToAllPrincipals",
-			"Effect": "Allow",
-			"Principal": "*",
-			"Action": [
-				"s3:List*",
-				"s3:Get*",
-				"s3-object-lambda:List*",
-				"s3-object-lambda:Get*",
-				"s3:Put*"
-			],
-			"Resource": [
-				"arn:aws:s3:::azzgamilsalahgg-s3-bucket",
-				"arn:aws:s3:::azzgamilsalahgg-s3-bucket/*"
-			]
-		}
-	]
-}
-POLICY
+data "aws_iam_policy_document" "s3_endpoint_policy" {
+  statement {
+    sid    = "AllowAllActionsToAllPrincipals"
+    effect = "Allow"
+
+    actions = [
+      "s3:List*",
+      "s3:Get*",
+      "s3-object-lambda:List*",
+      "s3-object-lambda:Get*",
+      "s3:Put*"
+    ]
+
+    resources = [
+      "arn:aws:s3:::azzgamilsalahgg-s3-bucket",
+      "arn:aws:s3:::azzgamilsalahgg-s3-bucket/*"
+    ]
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+  }
 }
