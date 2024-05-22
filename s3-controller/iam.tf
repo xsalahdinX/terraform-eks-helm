@@ -16,7 +16,7 @@ data "aws_iam_policy_document" "s3-controller-policy-document" {
       "s3:GetObject"
     ]
     resources = [
-      "arn:aws:s3:::${var.s3-bucket-name}/*"
+      for bucket_name in var.s3-bucket-name : "arn:aws:s3:::${bucket_name}/*"
     ]
   }
   statement {
