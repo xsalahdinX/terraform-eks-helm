@@ -75,6 +75,6 @@ resource "aws_iam_role_policy_attachment" "s3-controller-policy-attachment" {
   depends_on = [aws_iam_role.s3-controller-role]
 }
 
-data "aws_kms_alias" "s3" {
-  name = var.aws-kms-alias
+data "aws_kms_key" "by_alias" {
+  key_id = var.aws-kms-alias
 }
