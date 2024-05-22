@@ -5,7 +5,7 @@ variable "cluster_name" {
 }
 variable "s3-bucket-name" {
   description = "The name of the S3 bucket"
-  type = set()
+  type = set(string)
 }
 
 variable "aws-kms-alias" {
