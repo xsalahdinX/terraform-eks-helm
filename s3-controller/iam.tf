@@ -33,8 +33,7 @@ data "aws_iam_policy_document" "s3-controller-policy-document" {
 }
 
 resource "aws_iam_policy" "s3-controller-policy" {
-  name        = var.s3-controller-policy-name
-  path        = "/"
+  name   = var.s3-controller-policy-name
   policy = data.aws_iam_policy_document.s3-controller-policy-document.json
 }
 
@@ -66,7 +65,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
 resource "aws_iam_role" "s3-controller-role" {
   name               = var.s3-controller-role-name
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
-  tags               = { "ServiceAccountName" = var.s3-controller-serviceaccount, "ServiceAccountNameSpace" = var.s3-controller-namespace }
+  tags               = { "ServiceAccountName" = "${var.s3-controller-serviceaccount}", "ServiceAccountNameSpace" = "${var.s3-controller-namespace}" }
   depends_on         = [aws_iam_policy.s3-controller-policy]
 }
 
