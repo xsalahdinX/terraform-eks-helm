@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "s3-controller-policy-document" {
       "kms:DescribeKey"
     ]
     resources = [
-      "${data.aws_kms_alias.s3.arn}"
+      "${data.aws_kms_key.by_alias.arn}"
     ]
   }
 }
