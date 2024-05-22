@@ -41,7 +41,7 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
       "s3-object-lambda:Get*",
       "s3:Put*"
     ]
-    resources = "*"
+    resources = ["*"]
     principals {
       type        = "AWS"
       identifiers = ["*"]
