@@ -41,12 +41,7 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
       "s3-object-lambda:Get*",
       "s3:Put*"
     ]
-
-    resources = [
-      "${var.s3-bucket-name}",
-      "${var.s3-bucket-name}/*"
-    ]
-
+    resources = "*"
     principals {
       type        = "AWS"
       identifiers = ["*"]

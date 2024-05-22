@@ -1,6 +1,10 @@
 
 resource "aws_kms_key" "mykey" {
-  description = "This key is used to encrypt bucket objects"
+} 
+
+resource "aws_kms_alias" "a" {
+  name          = "alias/test"
+  target_key_id = aws_kms_key.mykey.key_id
 }
 
 resource "aws_s3_bucket" "s3_bucket" {

@@ -21,7 +21,13 @@ module "alb" {
 # module "efs" {
 #   source = "./efs"
 # }
+ module "gatway-s3" {
+  source = "./gatway-endpoint"
+  region = "us-east-1"
+  s3-bucket-name = "azzgamilsalahgg-s3-bucket"
 
+   
+ }
 module "s3" {
   source = "./s3-controller"
   cluster_name = "eks"
@@ -30,17 +36,5 @@ module "s3" {
   s3-controller-namespace = "s3-controller"
   s3-bucket-name = "azzgamilsalahgg-s3-bucket"
   s3-controller-policy-name = "s3-controller-policy"
-  kms-key-arn = "arn:aws:kms:us-west-2:123456789012:key/12345678-1234-1234-1234-123456789012"
-  # kms-key-arn = module.s3.kms-key-arn
-
-
+  aws-kms-alias = "alias/test"
 }
- module "gatway-s3" {
-  source = "./gatway-endpoint"
-  region = "us-east-1"
-  s3-bucket-name = "azzgamilsalahgg-s3-bucket"
-
-   
- }
-
-

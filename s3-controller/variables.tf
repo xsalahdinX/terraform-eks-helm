@@ -12,7 +12,7 @@ variable "s3-controller-serviceaccount" {
 }
 variable "s3-controller-namespace" {
   description = "The namespace of the service account for the S3 controller"
-  default     = "default"
+  default     = "kube-system"
 }
 
 variable "cluster_name" {
@@ -24,6 +24,8 @@ variable "s3-bucket-name" {
   description = "The name of the S3 bucket"
 }
 
-variable "kms-key-arn" {
-  description = "The ARN of the KMS key"
+variable "aws-kms-alias" {
+  description = "The alias of the KMS key"
+  default = "alias/test"
+  
 }

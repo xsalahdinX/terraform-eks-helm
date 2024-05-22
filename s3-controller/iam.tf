@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "s3-controller-policy" {
+data "aws_iam_policy_document" "s3-controller-policy-document" {
   statement {
     sid    = "MountpointFullBucketAccess"
     effect = "Allow"
@@ -27,16 +27,15 @@ data "aws_iam_policy_document" "s3-controller-policy" {
       "kms:DescribeKey"
     ]
     resources = [
-      "${var.kms-key-arn}"
+      "${data.aws_kms_alias.s3.arn}"
     ]
   }
 }
 
 resource "aws_iam_policy" "s3-controller-policy" {
-  name        = "s3_controller_policy"
+  name        = var.s3-controller-policy-name
   path        = "/"
-  description = "My s3 policy"
-  policy = data.aws_iam_policy_document.s3-controller-policy.json
+  policy = data.aws_iam_policy_document.s3-controller-policy-document.json
 }
 
 data "aws_iam_policy_document" "assume_role_policy" {
@@ -75,4 +74,8 @@ resource "aws_iam_role_policy_attachment" "s3-controller-policy-attachment" {
   policy_arn = aws_iam_policy.s3-controller-policy.arn
   role       = aws_iam_role.s3-controller-role.name
   depends_on = [aws_iam_role.s3-controller-role]
+}
+
+data "aws_kms_alias" "s3" {
+  name = var.aws-kms-alias
 }
