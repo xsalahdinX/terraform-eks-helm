@@ -37,4 +37,5 @@ module "s3" {
   s3-bucket-name = "azzgamilsalahgg-s3-bucket"
   s3-controller-policy-name = "s3-controller-policy"
   aws-kms-alias = "alias/test"
+  depends_on = [ module.gatway-s3 ]
 }
