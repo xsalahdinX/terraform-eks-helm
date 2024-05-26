@@ -43,7 +43,7 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
       "s3:DeleteObject",
       "s3:ListMultipartUploadParts"
     ]
-    resources = ["arn:aws:s3:::azzgamilsalahgg-s3-bucket"]
+    resources = ["arn:aws:s3:::azzgamilsalahgg-s3-bucket", "arn:aws:s3:::azzgamilsalahgg-s3-bucket/*"]
     principals {
       type        = "AWS"
       identifiers = ["*"]
