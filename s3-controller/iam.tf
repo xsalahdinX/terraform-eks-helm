@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "s3-controller-policy-document" {
+data "aws_iam_policy_document" "s3_controller_policy_document" {
   statement {
     sid    = "MountpointFullBucketAccess"
     effect = "Allow"
