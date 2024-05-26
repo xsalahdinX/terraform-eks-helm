@@ -3,36 +3,36 @@ variable "cluster_name" {
   default     = "eks"
 
 }
-variable "s3-bucket-name" {
+variable "s3_bucket_name" {
   description = "The name of the S3 bucket"
-  type = list(string)
+  type = set(string)
 }
 
-variable "aws-kms-alias" {
+variable "aws_kms_alias" {
   description = "The alias of the KMS key"
   default = "alias/test"
   
 }
 
-variable "s3-controller-policy-name" {
+variable "s3_controller_policy_name" {
   description = "The name of the policy for the S3 controller"
   type        = string
   default     = "s3-controller-policy"
 }
 
-variable "s3-controller-role-name" {
+variable "s3_controller_role_name" {
   description = "The name of the role for the S3 controller"
   type        = string
   default     = "s3-controller-role"
 }
 
-variable "s3-controller-serviceaccount" {
+variable "s3_controller_serviceaccount" {
   description = "The name of the service account for the S3 controller"
   type        = string
   default     = "s3-csi-driver-sa"
 }
 
-variable "s3-controller-namespace" {
+variable "s3_controller_namespace" {
   description = "The namespace of the service account for the S3 controller"
   type        = string
   default     = "kube-system"

@@ -35,11 +35,13 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
     effect = "Allow"
 
     actions = [
-      "s3:List*",
-      "s3:Get*",
-      "s3-object-lambda:List*",
-      "s3-object-lambda:Get*",
-      "s3:Put*"
+      "s3:PutObject",
+      "s3:GetObject",
+      "s3:ListBucketMultipartUploads",
+      "s3:ListBucketVersions",
+      "s3:ListBucket",
+      "s3:DeleteObject",
+      "s3:ListMultipartUploadParts"
     ]
     resources = ["*"]
     principals {

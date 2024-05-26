@@ -6,7 +6,7 @@ data "aws_iam_policy_document" "s3-controller-policy-document" {
       "s3:ListBucket"
     ]
     resources = [
-      for bucket_name in var.s3-bucket-name : "arn:aws:s3:::${bucket_name}"
+      for bucket_name in var.s3_bucket_name : "arn:aws:s3:::${bucket_name}"
     ]
   }
   statement {
@@ -16,7 +16,7 @@ data "aws_iam_policy_document" "s3-controller-policy-document" {
       "s3:GetObject"
     ]
     resources = [
-      for bucket_name in var.s3-bucket-name : "arn:aws:s3:::${bucket_name}/*"
+      for bucket_name in var.s3_bucket_name : "arn:aws:s3:::${bucket_name}/*"
     ]
   }
   statement {
@@ -32,9 +32,9 @@ data "aws_iam_policy_document" "s3-controller-policy-document" {
   }
 }
 
-resource "aws_iam_policy" "s3-controller-policy" {
-  name   = var.s3-controller-policy-name
-  policy = data.aws_iam_policy_document.s3-controller-policy-document.json
+resource "aws_iam_policy" "s3_controller_policy" {
+  name   = var.s3_controller_policy_name
+  policy = data.aws_iam_policy_document.s3_controller_policy_document.json
 }
 
 data "aws_iam_policy_document" "assume_role_policy" {
@@ -62,19 +62,18 @@ data "aws_iam_policy_document" "assume_role_policy" {
 
 
 
-resource "aws_iam_role" "s3-controller-role" {
-  name               = var.s3-controller-role-name
+resource "aws_iam_role" "s3_controller_role" {
+  name               = var.s3_controller_role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
-  tags               = { "ServiceAccountName" = "${var.s3-controller-serviceaccount}", "ServiceAccountNameSpace" = "${var.s3-controller-namespace}" }
-  depends_on         = [aws_iam_policy.s3-controller-policy]
+  depends_on         = [aws_iam_policy.s3_controller_policy]
 }
 
-resource "aws_iam_role_policy_attachment" "s3-controller-policy-attachment" {
-  policy_arn = aws_iam_policy.s3-controller-policy.arn
-  role       = aws_iam_role.s3-controller-role.name
-  depends_on = [aws_iam_role.s3-controller-role]
+resource "aws_iam_role_policy_attachment" "s3_controller_policy_attachment" {
+  policy_arn = aws_iam_policy.s3_controller_policy.arn
+  role       = aws_iam_role.s3_controller_role.name
+  depends_on = [aws_iam_role.s3_controller_role]
 }
 
 data "aws_kms_key" "by_alias" {
-  key_id = var.aws-kms-alias
+  key_id = var.aws_kms_alias
 }
