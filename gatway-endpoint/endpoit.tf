@@ -35,16 +35,16 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
     effect = "Allow"
 
     actions = [
-      "s3:PutObject",
       "s3:GetObject",
-      "s3:ListBucketMultipartUploads",
-      "s3:ListBucketVersions",
-      "s3:ListBucket",
-      "s3:DeleteObject",
-      "s3:ListMultipartUploadParts"
+      "s3:ListBucket"
     ]
-    resources = [ for bucket_name in var.s3_bucket_name :[ "arn:aws:s3:::${bucket_name}", "arn:aws:s3:::${bucket_name}/*" ]]
-    principals {
+    resources = flatten([
+      for bucket_name in var.s3_bucket_name : [
+        "arn:aws:s3:::${bucket_name}",
+        "arn:aws:s3:::${bucket_name}/*"
+      ]
+    ])    
+principals {
       type        = "AWS"
       identifiers = ["*"]
     }
