@@ -8,7 +8,7 @@ resource "aws_kms_alias" "a" {
 }
 
 resource "aws_s3_bucket" "s3_bucket" {
-  bucket = var.s3-bucket-name
+  bucket = var.s3_bucket_name
   force_destroy = true
   tags   = { Name = "My bucket", Environment = "Dev" }
 }
@@ -68,7 +68,7 @@ data "aws_iam_policy_document" "s3-policy" {
       type        = "*"
       identifiers = ["*"]
     }
-    resources = ["arn:aws:s3:::${var.s3-bucket-name}", "arn:aws:s3:::${var.s3-bucket-name}/*"]
+    resources = ["arn:aws:s3:::${var.s3_bucket_name}", "arn:aws:s3:::${var.s3_bucket_name}/*"]
     condition {
       test     = "Bool"
       variable = "aws:SecureTransport"
@@ -83,7 +83,7 @@ data "aws_iam_policy_document" "s3-policy" {
       type        = "*"
       identifiers = ["*"]
     }
-    resources = ["arn:aws:s3:::${var.s3-bucket-name}/*"]
+    resources = ["arn:aws:s3:::${var.s3_bucket_name}/*"]
     condition {
       test     = "StringEquals"
       variable = "s3:x-amz-server-side-encryption"
@@ -94,7 +94,7 @@ data "aws_iam_policy_document" "s3-policy" {
     sid       = "RequireKMSEncryption"
     effect    = "Deny"
     actions   = ["s3:PutObject"]
-    resources = ["arn:aws:s3:::${var.s3-bucket-name}/*"]
+    resources = ["arn:aws:s3:::${var.s3_bucket_name}/*"]
     principals {
       type        = "*"
       identifiers = ["*"]
