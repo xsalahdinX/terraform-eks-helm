@@ -31,7 +31,7 @@ data "aws_vpc" "eks-vpc" {
 
 data "aws_iam_policy_document" "s3_endpoint_policy" {
   statement {
-    sid    = "AllowAllActionsToAllPrincipals"
+    sid    = "AllowAllActionsToSpecificPrincipal"
     effect = "Allow"
 
     actions = [
@@ -47,6 +47,11 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
     principals {
       type        = "AWS"
       identifiers = ["*"]
+    }
+    condition {
+      test     = "ArnEquals"
+      variable = "aws:PrincipalArn"
+      values   = ["*"]
     }
   }
 }
