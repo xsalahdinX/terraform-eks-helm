@@ -24,7 +24,7 @@ module "alb" {
  module "gatway-s3" {
   source = "./gatway-endpoint"
   region = "us-east-1"
-  s3-bucket-name = "azzgamilsalahgg-s3-bucket"
+  s3_bucket_name = "azzgamilsalahgg-s3-bucket"
 
    
  }
