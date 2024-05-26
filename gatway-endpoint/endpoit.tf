@@ -34,7 +34,7 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
     for_each = local.resource_principal_map
 
     content {
-      sid    = "AllowAllActionsToAllPrincipals"
+      sid    = "AllowAllActionsToAllPrincipals${statement.key}"
       effect = "Allow"
 
       actions = [
