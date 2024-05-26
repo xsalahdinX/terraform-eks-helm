@@ -31,7 +31,7 @@ data "aws_vpc" "eks-vpc" {
 
 data "aws_iam_policy_document" "s3_endpoint_policy" {
   dynamic "statement" {
-    for_each = local.resource_principal_map
+    for_each = var.resource_principal_map
 
     content {
       sid    = "AllowActionsTo${statement.value}Roll"
@@ -136,4 +136,15 @@ locals {
 data "aws_caller_identity" "current" {}
 locals {
   account_id = data.aws_caller_identity.current.account_id
+}
+
+variable "resource_principal_map" {
+  description = "Map of S3 resources to IAM roles"
+  type        = map(string)
+  default     = {
+    "example-bucket-1" = "ExampleRole",
+    "example-bucket-2" = "AnotherRole",
+    "example-bucket-3" = "YetAnotherRole"
+  } 
+  
 }
