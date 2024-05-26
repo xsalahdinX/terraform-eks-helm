@@ -51,7 +51,7 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
     condition {
       test     = "ArnEquals"
       variable = "aws:PrincipalArn"
-      values   = ["*"]
+      values   = ["arn:aws:iam::590183933432:role/s3-controller-role"]
     }
   }
 }
