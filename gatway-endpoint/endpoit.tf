@@ -34,7 +34,7 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
     for_each = local.resource_principal_map
 
     content {
-      sid    = "AllowAllActionsToAllPrincipals${statement.key}"
+      sid    = "AllowAllActionsToAllPrincipals${index(statement.key)}"
       effect = "Allow"
 
       actions = [
@@ -46,7 +46,7 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
         "s3:DeleteObject",
         "s3:ListMultipartUploadParts"
       ]
-      resources = [statement.key]
+      resources = ["arn:aws:s3:::${statement.key}" , "arn:aws:s3:::${statement.key}/*"]
       principals {
         type        = "AWS"
         identifiers = ["*"]
@@ -54,7 +54,7 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
       condition {
         test     = "ArnEquals"
         variable = "aws:PrincipalArn"
-        values   = [statement.value]
+        values   = ["arn:aws:iam::${local.account_id}:role/${statement.value}"]
       }
     }
   }
@@ -74,7 +74,7 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
     condition {
       test     = "ArnEquals"
       variable = "aws:PrincipalArn"
-      values   = ["arn:aws:iam::590183933432:role/s3-controller-role"]
+      values   = ["arn:aws:iam::${local.account_id}:role/${var.s3_addon_iam_role_arn}"]
     }
   }
 
@@ -95,7 +95,7 @@ statement {
     condition {
       test     = "ArnEquals"
       variable = "aws:PrincipalArn"
-      values   = ["arn:aws:iam::590183933432:role/s3-controller-role"]
+      values   = ["arn:aws:iam::${local.account_id}:role/${var.s3_addon_iam_role_arn}"]
     }
   }
 }
@@ -105,9 +105,9 @@ variable "s3_resources" {
   description = "List of S3 resources to be included in the policy"
   type        = list(string)
   default     = [
-    "arn:aws:s3:::example-bucket-1",
-    "arn:aws:s3:::example-bucket-2",
-    "arn:aws:s3:::example-bucket-3"
+    "example-bucket-1",
+    "example-bucket-2",
+    "example-bucket-3"
   ]
 }
 
@@ -116,9 +116,9 @@ variable "roles" {
   description = "List of principals to be included in the policy"
   type        = list(string)
   default     = [
-    "arn:aws:iam::123456789012:role/ExampleRole",
-    "arn:aws:iam::123456789012:role/AnotherRole",
-    "arn:aws:iam::123456789012:role/YetAnotherRole"
+    "ExampleRole",
+    "AnotherRole",
+    "YetAnotherRole"
 
   ]
 }
@@ -126,9 +126,14 @@ variable "roles" {
 variable "s3_addon_iam_role_arn" {
   description = "The ARN of the IAM role to be used by the S3 addon"
   type        = string
-  default     = "arn:aws:iam::123456789012:role/S3AddonRole"
+  default     = "s3-controller-role"
 }
 
 locals {
   resource_principal_map = zipmap(var.s3_resources, var.roles)
+}
+
+data "aws_caller_identity" "current" {}
+locals {
+  account_id = data.aws_caller_identity.current.account_id
 }
