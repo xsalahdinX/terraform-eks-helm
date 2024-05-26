@@ -7,6 +7,13 @@ variable "s3_resources" {
   ]
 }
 
+
+variable "bucket_name" {
+  description = "The name of the S3 bucket"
+  type = set(string)
+}
+
+
 variable "s3_bucket_name" {
   description = "The name of the S3 bucket"
   type        = list(string)
@@ -64,20 +71,42 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
   }
   
   statement {
-    sid    = "MountpointFullBucketAccess"
+    sid    = "AllowListBucket"
     effect = "Allow"
-    actions = [ "s3:ListBucket", "s3:GetObject"]
-    resources = [
-      for bucket_name in var.s3_bucket_name :[ "arn:aws:s3:::${bucket_name}", "arn:aws:s3:::${bucket_name}/*"]
+
+    actions = ["s3:ListBucket"]
+    resources =[
+      for bucket_name in var.bucket_name : "arn:aws:s3:::${bucket_name}"
     ]
-    principals {
-    type        = "AWS"
-    identifiers = ["*"]
+      principals {
+      type        = "AWS"
+      identifiers = ["*"]
     }
     condition {
-    test     = "ArnEquals"
-    variable = "aws:PrincipalArn"
-    values   = [var.s3_addon_iam_role_arn]
+      test     = "ArnEquals"
+      variable = "aws:PrincipalArn"
+      values   = ["arn:aws:iam::590183933432:role/s3-controller-role"]
+    }
+  }
+
+statement {
+    sid    = "AllowGetObject"
+    effect = "Allow"
+
+    actions = [ "s3:GetObject"]
+
+    resources =[
+      for bucket_name in var.bucket_name : "arn:aws:s3:::${bucket_name}/*"
+    ]
+  
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+    condition {
+      test     = "ArnEquals"
+      variable = "aws:PrincipalArn"
+      values   = ["arn:aws:iam::590183933432:role/s3-controller-role"]
     }
   }
 }
