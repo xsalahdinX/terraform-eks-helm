@@ -31,18 +31,14 @@ data "aws_vpc" "eks-vpc" {
 
 data "aws_iam_policy_document" "s3_endpoint_policy" {
   statement {
-    sid    = "AllowAllActionsToSpecificPrincipal"
+    sid    = "AllowListBucket"
     effect = "Allow"
 
-    actions = [
-      "s3:GetObject",
-      "s3:ListBucket"
-    ]
+    actions = ["s3:ListBucket"]
     resources =[
       for bucket_name in var.bucket_name : "arn:aws:s3:::${bucket_name}"
     ]
-  
-    principals {
+      principals {
       type        = "AWS"
       identifiers = ["*"]
     }
@@ -54,7 +50,7 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
   }
 
 statement {
-    sid    = "AllowAllActionsToSpecificPrincipal"
+    sid    = "AllowGetObject"
     effect = "Allow"
 
     actions = [ "s3:GetObject"]
