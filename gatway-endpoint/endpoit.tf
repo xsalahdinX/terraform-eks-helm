@@ -39,7 +39,7 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
       "s3:ListBucket"
     ]
     resources = flatten([
-      for bucket_name in [var.bucket_name] : [
+      for bucket_name in var.bucket_name : [
         "arn:aws:s3:::${bucket_name}",
         "arn:aws:s3:::${bucket_name}/*"
       ]
