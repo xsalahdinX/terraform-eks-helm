@@ -39,11 +39,11 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
       "s3:ListBucket"
     ]
     resources = flatten([
-      for bucket_name in var.s3_bucket_name : [
+      for bucket_name in [var.s3_bucket_name] : [
         "arn:aws:s3:::${bucket_name}",
         "arn:aws:s3:::${bucket_name}/*"
       ]
-    ])    
+    ]) 
 principals {
       type        = "AWS"
       identifiers = ["*"]
