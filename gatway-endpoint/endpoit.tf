@@ -30,33 +30,33 @@ data "aws_vpc" "eks-vpc" {
 }
 
 data "aws_iam_policy_document" "s3_endpoint_policy" {
-  dynamic "statement" {
-    for_each = var.resource_principal_map
+  # dynamic "statement" {
+  #   for_each = var.resource_principal_map
 
-    content {
-      sid    = "AllowActionsTo${join("-", slice(split("-", statement.key), 1, 3))}Roll"
-      effect = "Allow"
+  #   content {
+  #     sid    = "AllowActionsTo${join("-", slice(split("-", statement.key), 1, 3))}Roll"
+  #     effect = "Allow"
 
-      actions = [
-        "s3:PutObject",
-        "s3:GetObject",
-        "s3:ListBucketMultipartUploads",
-        "s3:ListBucketVersions",
-        "s3:ListBucket",
-        "s3:ListMultipartUploadParts"
-      ]
-      resources = ["arn:aws:s3:::${statement.key}" , "arn:aws:s3:::${statement.key}/*"]
-      principals {
-        type        = "AWS"
-        identifiers = ["*"]
-      }
-      condition {
-        test     = "ArnEquals"
-        variable = "aws:PrincipalArn"
-        values   = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${statement.value}"]
-      }
-    }
-  }
+  #     actions = [
+  #       "s3:PutObject",
+  #       "s3:GetObject",
+  #       "s3:ListBucketMultipartUploads",
+  #       "s3:ListBucketVersions",
+  #       "s3:ListBucket",
+  #       "s3:ListMultipartUploadParts"
+  #     ]
+  #     resources = ["arn:aws:s3:::${statement.key}" , "arn:aws:s3:::${statement.key}/*"]
+  #     principals {
+  #       type        = "AWS"
+  #       identifiers = ["*"]
+  #     }
+  #     condition {
+  #       test     = "ArnEquals"
+  #       variable = "aws:PrincipalArn"
+  #       values   = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${statement.value}"]
+  #     }
+  #   }
+  # }
   
 statement {
     sid    = "AllowGetObject"
