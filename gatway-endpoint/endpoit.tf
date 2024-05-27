@@ -59,34 +59,58 @@ data "aws_iam_policy_document" "s3_endpoint_policy" {
     }
   }
   
-  statement {
-    sid    = "AllowListBucket"
-    effect = "Allow"
+#   statement {
+#     sid    = "AllowListBucket"
+#     effect = "Allow"
 
-    actions = ["s3:ListBucket"]
-    resources =[
-      for bucket_name in var.bucket_name : "arn:aws:s3:::${bucket_name}"
-    ]
-      principals {
-      type        = "AWS"
-      identifiers = ["*"]
-    }
-    condition {
-      test     = "ArnEquals"
-      variable = "aws:PrincipalArn"
-      values   = ["arn:aws:iam::${local.account_id}:role/${var.s3_addon_iam_role_arn}"]
-    }
-  }
+#     actions = ["s3:ListBucket"]
+#     resources =[
+#       for bucket_name in var.bucket_name : "arn:aws:s3:::${bucket_name}"
+#     ]
+#       principals {
+#       type        = "AWS"
+#       identifiers = ["*"]
+#     }
+#     condition {
+#       test     = "ArnEquals"
+#       variable = "aws:PrincipalArn"
+#       values   = ["arn:aws:iam::${local.account_id}:role/${var.s3_addon_iam_role_arn}"]
+#     }
+#   }
+
+# statement {
+#     sid    = "AllowGetObject"
+#     effect = "Allow"
+
+#     actions = [ "s3:GetObject"]
+
+#     resources =[
+#       for bucket_name in var.bucket_name : "arn:aws:s3:::${bucket_name}/*"
+#     ]
+  
+#     principals {
+#       type        = "AWS"
+#       identifiers = ["*"]
+#     }
+#     condition {
+#       test     = "ArnEquals"
+#       variable = "aws:PrincipalArn"
+#       values   = ["arn:aws:iam::${local.account_id}:role/${var.s3_addon_iam_role_arn}"]
+#     }
+#   }
 
 statement {
     sid    = "AllowGetObject"
     effect = "Allow"
 
-    actions = [ "s3:GetObject"]
+    actions = [ "s3:GetObject", "s3:ListBucket"]
 
-    resources =[
-      for bucket_name in var.bucket_name : "arn:aws:s3:::${bucket_name}/*"
-    ]
+    resources = flatten([
+      for bucket_name in var.bucket_name : [
+        "arn:aws:s3:::${bucket_name}",
+        "arn:aws:s3:::${bucket_name}/*"
+      ]
+    ])
   
     principals {
       type        = "AWS"
