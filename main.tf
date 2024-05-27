@@ -21,18 +21,18 @@ module "alb" {
 # module "efs" {
 #   source = "./efs"
 # }
- module "gatway-s3" {
-  source = "./gatway-endpoint"
-  region = "us-east-1"
-  bucket_name = ["azzgamilsalahgg-s3-bucket", "azzgamilsalahgg-s3-bucket2"]
-  s3_bucket_name = "azzgamilsalahgg-s3-bucket"
+#  module "gatway-s3" {
+#   source = "./gatway-endpoint"
+#   region = "us-east-1"
+#   bucket_name = ["azzgamilsalahgg-s3-bucket", "azzgamilsalahgg-s3-bucket2"]
+#   s3_bucket_name = "azzgamilsalahgg-s3-bucket"
 
    
- }
+#  }
 module "s3" {
   source = "./s3-controller"
   cluster_name = "eks"
   s3_bucket_name = ["azzgamilsalahgg-s3-bucket"]
   aws_kms_alias = "alias/test"
-  depends_on = [ module.gatway-s3 ]
+  # depends_on = [ module.gatway-s3 ]
 }
