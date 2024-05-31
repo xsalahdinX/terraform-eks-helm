@@ -16,9 +16,3 @@ variable "account_id" {
     description = "The AWS account ID."
     type = string  
 }
-
-variable "chart_path" {
-    description = "The path to the chart directory."
-    type = string
-  
-}
