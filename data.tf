@@ -11,9 +11,9 @@ data "aws_eks_cluster_auth" "eks" {
 }
 data "aws_caller_identity" "current" {}
 
-# data "aws_kms_key" "by_alias" {
-#   key_id = local.aws_kms_alias
-# }
+data "aws_kms_key" "by_alias" {
+  key_id = local.aws_kms_alias
+}
 
 
 
