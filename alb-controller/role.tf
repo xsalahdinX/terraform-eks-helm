@@ -23,7 +23,7 @@ data "aws_iam_policy_document" "default" {
 
 resource "aws_iam_policy" "ALBIngressControllerIAMPolicy" {
     name = "${var.eks-alb-policy-name}"
-    policy = file("./alb-policy.json")
+    policy = file("./${path.module}/alb-policy.json")
 }
 resource "aws_iam_role" "alb-ingress-controller-role" {
   name = "${var.eks-alb-role-name}"
