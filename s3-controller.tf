@@ -8,5 +8,22 @@ module "s3-controller" {
   s3_controller_policy_name = "s3-controller-policy"
   s3_controller_serviceaccount = "s3-csi-driver-sa"
   s3_controller_role_name = "s3-controller-role"
-  depends_on = [ module.test-s3 ]
+  depends_on = [ module.gatway-s3 ]
 }
+
+
+
+
+module "test-s3" {
+  source = "./test-s3"
+  s3_bucket_name = "azzgamilsalahgg-s3-bucket"
+
+}
+
+ module "gatway-s3" {
+  source = "./gatway-endpoint"
+  region = "us-east-1"
+  bucket_name = ["azzgamilsalahgg-s3-bucket", "azzgamilsalahgg-s3-bucket2"]
+  depends_on = [ module.test-s3]
+
+ }
