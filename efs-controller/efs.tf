@@ -17,3 +17,8 @@ data "aws_subnets" "private_subnets" {
   }
 }
 
+
+output "efs_id" {
+  value = aws_efs_file_system.eks-file-system.id
+  
+}
