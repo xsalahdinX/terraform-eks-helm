@@ -1,21 +1,21 @@
-data "aws_iam_policy_document" "assume_role_policy" {
+data "aws_iam_policy_document" "default" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
     effect  = "Allow"
 
     condition {
       test     = "StringEquals"
-      variable = "${replace(data.aws_iam_openid_connect_provider.eks-cluster-oidc.url, "https://", "")}:sub"
+      variable = "${replace(var.eks_issuer_url, "https://", "")}:sub"
       values   = ["system:serviceaccount:${var.alb-namespace}:${var.alb-serviceaccount}"]
     }
     condition {
       test     = "StringEquals"
-      variable = "${replace(data.aws_iam_openid_connect_provider.eks-cluster-oidc.url, "https://", "")}:aud"
+      variable = "${replace(var.eks_issuer_arn, "https://", "")}:aud"
       values   = ["sts.amazonaws.com"]
     }
 
     principals {
-      identifiers = [data.aws_iam_openid_connect_provider.eks-cluster-oidc.arn]
+      identifiers = [var.eks_issuer_arn]
       type        = "Federated"
     }
   }
@@ -23,11 +23,11 @@ data "aws_iam_policy_document" "assume_role_policy" {
 
 resource "aws_iam_policy" "ALBIngressControllerIAMPolicy" {
     name = "${var.eks-alb-policy-name}"
-    policy = file("./alb/iam-policy.json")
+    policy = file("./alb/alb-policy.json")
 }
 resource "aws_iam_role" "alb-ingress-controller-role" {
   name = "${var.eks-alb-role-name}"
-  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
+  assume_role_policy = data.aws_iam_policy_document.default.json
   tags = {"ServiceAccountName" = "${var.alb-serviceaccount}", "ServiceAccountNameSpace" = "${var.alb-namespace}"}
   depends_on = [ aws_iam_policy.ALBIngressControllerIAMPolicy ]
 }

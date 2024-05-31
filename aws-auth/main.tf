@@ -6,7 +6,7 @@ resource "helm_release" "aws_auth" {
   
   set {
     name   = "accountId"
-    value = "${local.account_id}"
+    value = "${var.account_id}"
   }
   set_list {
     name   = "nodegroup_role"

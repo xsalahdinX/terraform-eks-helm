@@ -1,5 +1,5 @@
 resource "aws_iam_role" "efs-csi-role" {
-  name = "efs-csi-role-role"
+  name = var.efs_role
   
   assume_role_policy = <<POLICY
 {
@@ -9,12 +9,12 @@ resource "aws_iam_role" "efs-csi-role" {
       "Sid": "",
       "Effect": "Allow",
       "Principal": {
-        "Federated": "${data.aws_iam_openid_connect_provider.eks-cluster-oidc.arn}"
+        "Federated": "${var.eks_issuer_arn}"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
-          "${replace(data.aws_iam_openid_connect_provider.eks-cluster-oidc.url, "https://", "")}:sub":[
+          "${replace(var.eks_issuer_url, "https://", "")}:sub":[
             "system:serviceaccount:efs-driver:efs-csi-node-sa",
             "system:serviceaccount:efs-driver:efs-csi-controller-sa"
           ]
@@ -26,8 +26,8 @@ resource "aws_iam_role" "efs-csi-role" {
 POLICY
 
   tags = {
-    "ServiceAccountName"      = "efs-csi-iam-policy"
-    "ServiceAccountNameSpace" = "kube-system"
+    "ServiceAccountName"      = var.efs_serviceaccount
+    "ServiceAccountNameSpace" = var.efs_controller_namespace
   }
 }
 

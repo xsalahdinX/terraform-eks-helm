@@ -3,15 +3,9 @@ variable "cluster_name" {
   default     = "eks"
 
 }
-variable "s3_bucket_name" {
+variable "s3_bucket_names" {
   description = "The name of the S3 bucket"
   type = set(string)
-}
-
-variable "aws_kms_alias" {
-  description = "The alias of the KMS key"
-  default = "alias/test"
-  
 }
 
 variable "s3_controller_policy_name" {
@@ -32,8 +26,20 @@ variable "s3_controller_serviceaccount" {
   default     = "s3-csi-driver-sa"
 }
 
-variable "s3_controller_namespace" {
-  description = "The namespace of the service account for the S3 controller"
-  type        = string
-  default     = "kube-system"
+
+variable "eks_issuer_url" {
+    description = "The OIDC issuer URL for the EKS cluster."
+    type = string
+  
+}
+
+variable "eks_issuer_arn" {
+    description = "The ARN of the OIDC provider for the EKS cluster."
+    type = string
+  
+}
+
+variable "aws_kms_arn" {
+    description = "The ARN of the KMS key"
+    type = string
 }

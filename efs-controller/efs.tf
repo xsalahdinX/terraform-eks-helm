@@ -1,9 +1,6 @@
 resource "aws_efs_file_system" "eks-file-system" {
   creation_token = "my-efs"
-
-  tags = {
-    Name = "eks_efs"
-  }
+  tags = {Name = "eks_efs"}
 }
 
 resource "aws_efs_mount_target" "foo" {
@@ -18,6 +15,5 @@ data "aws_subnets" "private_subnets" {
     name   = "tag:Name"
     values = ["private_subnets_*"]
   }
-
 }
 

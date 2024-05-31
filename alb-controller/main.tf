@@ -5,14 +5,14 @@ resource "helm_release" "aws-load-balancer-controller" {
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
   version    = var.elb_chart_version
-  values = ["${file("./alb/values.yaml")}"]
+  values = ["${file("${var.values_path}")}"]
   set {
     name  = "serviceAccount.name"
     value = "${var.alb-serviceaccount}"
   }
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = "arn:aws:iam::${local.account_id}:role/${var.eks-alb-role-name}"
+    value = "arn:aws:iam::${var.account_id}:role/${var.eks-alb-role-name}"
   }
 
   set {
