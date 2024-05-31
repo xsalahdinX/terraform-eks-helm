@@ -71,14 +71,15 @@ statement {
       ]
     ])
   
-    # principals {
-    #   type        = "AWS"
-    #   identifiers = ["*"]
-    # }
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+  }
+}
     # condition {
     #   test     = "ArnEquals"
     #   variable = "aws:PrincipalArn"
     #   values   = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.s3_addon_iam_role_name}"]
     # }
-  }
-}
