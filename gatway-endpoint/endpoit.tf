@@ -71,10 +71,10 @@ statement {
       ]
     ])
   
-    principals {
-      type        = "AWS"
-      identifiers = ["*"]
-    }
+    # principals {
+    #   type        = "AWS"
+    #   identifiers = ["*"]
+    # }
     # condition {
     #   test     = "ArnEquals"
     #   variable = "aws:PrincipalArn"
