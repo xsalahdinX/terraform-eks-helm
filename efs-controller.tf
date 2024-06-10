@@ -1,5 +1,5 @@
 module "efs-controller" {
-  source = "./efs-controller"
+  source = "github.com/xsalahdinX/terraform-modules//efs-controller"
   efs_controller_chart_version = "3.0.3"
   values_path              = "./values/efs-controller.yaml"
   efs_controller_namespace = "efs-controller"

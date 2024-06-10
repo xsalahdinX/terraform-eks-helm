@@ -1,5 +1,5 @@
 module "alb-controller" {
-  source              = "./alb-controller"
+  source              = "github.com/xsalahdinX/terraform-modules//alb-controller"
   elb_chart_version   = "1.7.1"
   alb-namespace       = "alb-controller"
   alb-serviceaccount  = "alb-controller-sa"
